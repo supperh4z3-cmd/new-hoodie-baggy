@@ -142,7 +142,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between text-xs font-mono tracking-widest text-zinc-400 uppercase">
               <span>Kategoriler</span>
-              <span className="text-[10px] text-zinc-600">5 Kategori</span>
+              <span className="text-[10px] text-zinc-500">{CATEGORIES.length} Kategori</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">

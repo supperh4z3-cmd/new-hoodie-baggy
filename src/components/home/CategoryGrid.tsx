@@ -10,8 +10,8 @@ export function CategoryGrid() {
   return (
     <section className="bg-black py-4 border-b border-zinc-900">
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4">
-        {/* 5-Column Grid on desktop, 2 on mobile */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+        {/* Responsive Grid for all categories (7 columns on desktop) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-3">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.id}

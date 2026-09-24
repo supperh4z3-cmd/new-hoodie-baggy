@@ -1,4 +1,4 @@
-export type CategorySlug = "hoodies" | "sweatpants" | "jackets" | "jeans" | "accessories";
+export type CategorySlug = "hoodies" | "sweatpants" | "jackets" | "jeans" | "accessories" | "shirts" | "tshirts";
 
 export type ProductSize = "S" | "M" | "L" | "XL" | "XXL";
 

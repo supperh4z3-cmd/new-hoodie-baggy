@@ -29,8 +29,8 @@ export function DrillEditorial() {
 
             <div className="pt-8">
               <Link
-                href="/shop?category=hoodies"
-                className="inline-flex items-center gap-3 bg-white text-black hover:bg-zinc-200 px-7 py-3.5 rounded text-xs font-mono font-bold tracking-widest uppercase transition-colors"
+                href="/editorial"
+                className="inline-flex items-center gap-3 bg-white text-black hover:bg-zinc-200 px-7 py-3.5 rounded text-xs font-mono font-bold tracking-widest uppercase transition-colors shadow-xl"
               >
                 <span>EXPLORE</span>
                 <ArrowRight className="w-4 h-4" />
@@ -57,7 +57,7 @@ export function DrillEditorial() {
 
             {/* Image 2: Amsterdam / Istanbul Collection Card */}
             <Link
-              href="/shop"
+              href="/editorial"
               className="relative h-[320px] sm:h-[420px] rounded-sm overflow-hidden border border-zinc-900 group block"
             >
               <Image

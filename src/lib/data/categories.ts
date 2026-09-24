@@ -34,6 +34,22 @@ export const CATEGORIES: Category[] = [
     itemCount: 7,
   },
   {
+    id: "cat-shirts",
+    slug: "shirts",
+    name: "SHIRTS (GÖMLEK)",
+    image: "/images/categories/shirts-cat.webp",
+    description: "Ağır flanel kumaşlar, fermuarlı işçi gömlekleri ve boxy overshirtler.",
+    itemCount: 4,
+  },
+  {
+    id: "cat-tshirts",
+    slug: "tshirts",
+    name: "T-SHIRTS",
+    image: "/images/categories/tshirts-cat.webp",
+    description: "300 GSM tok penye pamuk, vintage acid wash ve oversize grafik t-shirtler.",
+    itemCount: 6,
+  },
+  {
     id: "cat-accessories",
     slug: "accessories",
     name: "ACCESSORIES",

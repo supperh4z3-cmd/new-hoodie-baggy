@@ -60,10 +60,10 @@ export function ProductCard({ product }: ProductCardProps) {
       onMouseLeave={() => setIsHovered(false)}
       className="group relative flex flex-col justify-between bg-zinc-950/90 border border-zinc-850 hover:border-zinc-600/90 rounded-md p-3 sm:p-4 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-black/80"
     >
-      {/* Visual Container */}
+      {/* Visual Container (Tall High-Fashion Aspect Ratio) */}
       <Link
         href={`/product/${product.slug}`}
-        className="relative aspect-square w-full bg-zinc-900 rounded-sm overflow-hidden mb-3.5 border border-zinc-900 block"
+        className="relative aspect-[3/4] w-full bg-zinc-900 rounded-sm overflow-hidden mb-3.5 border border-zinc-900 block"
       >
         {/* Primary Image */}
         <Image
