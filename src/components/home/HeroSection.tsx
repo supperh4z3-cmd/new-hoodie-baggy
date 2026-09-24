@@ -182,8 +182,11 @@ export function HeroSection() {
 
       {/* Orta Alan: Dinamik Başlık, Logo ve Aksiyonlar */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 text-center my-auto py-10 flex flex-col items-center">
+        {/* Subtle Ambient Red Core Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[260px] bg-red-950/20 blur-[130px] pointer-events-none rounded-full" />
+
         {/* Logo veya Türkçe Çarpıcı Başlık */}
-        <div className="mb-6 drop-shadow-[0_12px_45px_rgba(0,0,0,0.95)] transition-all duration-700 animate-in fade-in zoom-in-95">
+        <div className="mb-6 drop-shadow-[0_12px_45px_rgba(0,0,0,0.95)] transition-all duration-700 animate-in fade-in zoom-in-95 relative z-10">
           {activeSlide.useLogo ? (
             <Logo size="xl" />
           ) : (
@@ -193,33 +196,41 @@ export function HeroSection() {
           )}
         </div>
 
-        {/* Türkçe Kategori Hızlı Linkleri */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-mono tracking-widest text-zinc-300 font-semibold mb-8 uppercase">
-          <Link href="/shop?category=hoodies" className="hover:text-white transition-colors">
+        {/* Türkçe Kategori Hızlı Linkleri (Gömlek ve T-shirt dahil) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-mono tracking-widest text-zinc-300 font-semibold mb-8 uppercase relative z-10">
+          <Link href="/shop?category=hoodies" className="hover:text-red-400 transition-colors">
             KAPÜŞONLU
           </Link>
           <span className="text-zinc-600">/</span>
-          <Link href="/shop?category=sweatpants" className="hover:text-white transition-colors">
-            EŞOFMAN ALTI
+          <Link href="/shop?category=sweatpants" className="hover:text-red-400 transition-colors">
+            EŞOFMAN
           </Link>
           <span className="text-zinc-600">/</span>
-          <Link href="/shop?category=jackets" className="hover:text-white transition-colors">
+          <Link href="/shop?category=shirts" className="hover:text-red-400 transition-colors text-white font-bold">
+            GÖMLEK
+          </Link>
+          <span className="text-zinc-600">/</span>
+          <Link href="/shop?category=tshirts" className="hover:text-red-400 transition-colors text-white font-bold">
+            T-SHIRT
+          </Link>
+          <span className="text-zinc-600">/</span>
+          <Link href="/shop?category=jackets" className="hover:text-red-400 transition-colors">
             CEKET
           </Link>
           <span className="text-zinc-600">/</span>
-          <Link href="/shop?category=jeans" className="hover:text-white transition-colors">
+          <Link href="/shop?category=jeans" className="hover:text-red-400 transition-colors">
             JEAN
           </Link>
           <span className="text-zinc-600">/</span>
-          <Link href="/shop" className="hover:text-white transition-colors">
+          <Link href="/shop" className="hover:text-red-400 transition-colors">
             TÜMÜ
           </Link>
         </div>
 
-        {/* Ana Buton (Türkçe) */}
+        {/* Ana Buton (Türkçe & Neon Laser Glow) */}
         <Link
           href={activeSlide.ctaLink}
-          className="group inline-flex items-center gap-3 bg-zinc-950/90 hover:bg-white text-white hover:text-black border border-zinc-700/90 hover:border-white px-9 py-4 rounded-xl text-xs font-mono font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 shadow-2xl"
+          className="group inline-flex items-center gap-3 bg-zinc-950/90 hover:bg-white text-white hover:text-black border border-zinc-700/90 hover:border-white px-9 py-4 rounded-xl text-xs font-mono font-black tracking-widest uppercase backdrop-blur-md transition-all duration-300 shadow-2xl hover:shadow-[0_0_40px_rgba(239,68,68,0.5)] hover:scale-[1.02] relative z-10"
         >
           <span>{activeSlide.ctaText}</span>
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
