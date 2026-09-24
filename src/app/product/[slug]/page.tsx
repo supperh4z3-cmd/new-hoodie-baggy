@@ -3,10 +3,12 @@
 import React, { useState, use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Ruler, ShoppingBag, CheckCircle, Shield, Truck, RotateCcw } from "lucide-react";
+import { Ruler, ShoppingBag, CheckCircle, Shield, Truck, RotateCcw, Heart } from "lucide-react";
 import { getProductBySlug } from "@/lib/data/products";
 import { ProductSize } from "@/lib/types/ecommerce";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { useWishlistStore } from "@/lib/store/useWishlistStore";
+import { useToastStore } from "@/lib/store/useToastStore";
 import { formatPrice } from "@/lib/utils";
 import { ProductGallery } from "@/components/products/ProductGallery";
 import { SizeGuideModal } from "@/components/products/SizeGuideModal";
@@ -28,6 +30,9 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const [addedEffect, setAddedEffect] = useState(false);
 
   const addItem = useCartStore((state) => state.addItem);
+  const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
+  const isInWishlist = useWishlistStore((state) => (product ? state.isInWishlist(product.id) : false));
+  const showToast = useToastStore((state) => state.showToast);
 
   if (!product) {
     notFound();
@@ -36,7 +41,17 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const handleAddToCart = () => {
     addItem(product, selectedSize, selectedColor, quantity);
     setAddedEffect(true);
+    showToast(`${quantity}x ${product.name} (${selectedSize}) sepete eklendi!`);
     setTimeout(() => setAddedEffect(false), 1200);
+  };
+
+  const handleToggleWishlist = () => {
+    const added = toggleWishlist(product);
+    if (added) {
+      showToast(`${product.name} favorilere eklendi!`);
+    } else {
+      showToast(`${product.name} favorilerden çıkarıldı.`, "info");
+    }
   };
 
   return (
@@ -204,6 +219,25 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     <span>SEPETE EKLE • {formatPrice(product.price * quantity)}</span>
                   </>
                 )}
+              </button>
+
+              {/* Wishlist Button */}
+              <button
+                type="button"
+                onClick={handleToggleWishlist}
+                className={`w-12 h-12 flex items-center justify-center rounded border transition-all duration-200 ${
+                  isInWishlist
+                    ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-950/50"
+                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600"
+                }`}
+                aria-label={isInWishlist ? "Favorilerden Çıkar" : "Favorilere Ekle"}
+                title={isInWishlist ? "Favorilerden Çıkar" : "Favorilere Ekle"}
+              >
+                <Heart
+                  className={`w-5 h-5 transition-transform active:scale-125 ${
+                    isInWishlist ? "fill-white text-white" : ""
+                  }`}
+                />
               </button>
             </div>
 

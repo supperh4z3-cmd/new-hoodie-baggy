@@ -60,6 +60,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-red-500" />
             </Link>
 
+            <Link
+              href="/wishlist"
+              onClick={onClose}
+              className="text-lg font-bold tracking-wider hover:text-red-500 transition-colors flex items-center justify-between group"
+            >
+              <span>FAVORİLERİM</span>
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-red-500" />
+            </Link>
+
             {/* Categories Submenu */}
             <div className="pt-2 pb-2 pl-3 border-l-2 border-zinc-800 space-y-3">
               <span className="text-[11px] font-mono tracking-widest text-zinc-500 block uppercase">

@@ -23,8 +23,6 @@ export default function CartPage() {
 
   const [couponInput, setCouponInput] = useState("");
   const [couponMsg, setCouponMsg] = useState<{ text: string; isError: boolean } | null>(null);
-  const [checkoutComplete, setCheckoutComplete] = useState(false);
-  const [orderCode, setOrderCode] = useState("");
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,40 +35,6 @@ export default function CartPage() {
       setCouponMsg({ text: res.message, isError: true });
     }
   };
-
-  const handleCheckout = () => {
-    setOrderCode(`BS-${Math.floor(100000 + Math.random() * 900000)}`);
-    setCheckoutComplete(true);
-    clearCart();
-  };
-
-  if (checkoutComplete) {
-    return (
-      <div className="max-w-3xl mx-auto px-4 py-24 text-center space-y-6">
-        <div className="w-20 h-20 bg-emerald-950/60 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-emerald-400">
-          <ShieldCheck className="w-10 h-10" />
-        </div>
-        <h1 className="text-2xl font-bold tracking-widest text-white uppercase">
-          SİPARİŞİNİZ ALINDI!
-        </h1>
-        <p className="text-sm text-zinc-400 max-w-md mx-auto">
-          Baggy Street siparişiniz başarıyla oluşturuldu. Sipariş takip numaranız ve kargo bilgilendirmesi e-posta adresinize iletilecektir.
-        </p>
-        <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-lg inline-block text-xs font-mono text-zinc-300">
-          Sipariş Kodu: #{orderCode}
-        </div>
-        <div>
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 bg-white text-black text-xs font-bold px-8 py-3.5 rounded uppercase tracking-wider hover:bg-zinc-200 transition-colors"
-          >
-            <span>ALIŞVERİŞE DEVAM ET</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
@@ -277,14 +241,13 @@ export default function CartPage() {
               </div>
 
               {/* Checkout CTA */}
-              <button
-                type="button"
-                onClick={handleCheckout}
+              <Link
+                href="/checkout"
                 className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-4 rounded uppercase tracking-widest transition-colors shadow-lg shadow-red-950/50"
               >
                 <span>ÖDEMEYE GEÇ (CHECKOUT)</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
 
             {/* Guarantees Box */}

@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, Search, User, ShoppingBag, X } from "lucide-react";
+import { Menu, Search, User, ShoppingBag, X, Heart } from "lucide-react";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { useWishlistStore } from "@/lib/store/useWishlistStore";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ export function Navbar() {
 
   const openCart = useCartStore((state) => state.openCart);
   const totalItemCount = useCartStore((state) => state.getTotalItemCount());
+  const wishlistCount = useWishlistStore((state) => state.items.length);
 
   const router = useRouter();
 
@@ -95,6 +97,20 @@ export function Navbar() {
               >
                 <Search className="w-5 h-5" />
               </button>
+
+              {/* Wishlist Link */}
+              <Link
+                href="/wishlist"
+                className="p-2 text-zinc-300 hover:text-white transition-colors relative flex items-center group"
+                aria-label={`Favoriler (${wishlistCount})`}
+              >
+                <Heart className="w-5 h-5 transition-transform duration-200 group-hover:scale-110 group-hover:text-red-500" />
+                {wishlistCount > 0 && (
+                  <span className="absolute top-1 right-1 inline-flex items-center justify-center min-w-[16px] h-[16px] px-1 text-[9px] font-bold text-white bg-red-600 rounded-full transition-transform group-hover:scale-105">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
 
               {/* Account Link */}
               <Link

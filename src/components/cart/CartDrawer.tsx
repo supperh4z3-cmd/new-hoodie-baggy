@@ -174,15 +174,24 @@ export function CartDrawer() {
               </div>
             </div>
 
-            {/* Primary Action Button */}
-            <Link
-              href="/cart"
-              onClick={closeCart}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-3.5 rounded uppercase tracking-widest transition-colors shadow-lg shadow-red-950/50"
-            >
-              <span>SİPARİŞİ TAMAMLA</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            {/* Primary Action Buttons */}
+            <div className="space-y-2">
+              <Link
+                href="/checkout"
+                onClick={closeCart}
+                className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-3.5 rounded uppercase tracking-widest transition-colors shadow-lg shadow-red-950/50"
+              >
+                <span>ÖDEMEYE GEÇ (CHECKOUT)</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/cart"
+                onClick={closeCart}
+                className="w-full flex items-center justify-center text-zinc-400 hover:text-white text-xs font-mono py-1.5 transition-colors"
+              >
+                <span>Sepeti Görüntüle ve Düzenle</span>
+              </Link>
+            </div>
 
             {/* Trust badge */}
             <div className="flex items-center justify-center gap-2 text-[11px] text-zinc-500 font-mono">

@@ -3,9 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Heart } from "lucide-react";
 import { Product } from "@/lib/types/ecommerce";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { useWishlistStore } from "@/lib/store/useWishlistStore";
+import { useToastStore } from "@/lib/store/useToastStore";
 import { formatPrice } from "@/lib/utils";
 
 interface ProductCardProps {
@@ -14,11 +16,26 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+  const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
+  const isInWishlist = useWishlistStore((state) => state.isInWishlist(product.id));
+  const showToast = useToastStore((state) => state.showToast);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, "L", product.colors[0], 1);
+    showToast(`${product.name} sepete eklendi!`);
+  };
+
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const added = toggleWishlist(product);
+    if (added) {
+      showToast(`${product.name} favorilere eklendi!`);
+    } else {
+      showToast(`${product.name} favorilerden çıkarıldı.`, "info");
+    }
   };
 
   return (
@@ -42,6 +59,24 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.badge}
           </span>
         )}
+
+        {/* Wishlist Toggle Button */}
+        <button
+          type="button"
+          onClick={handleToggleWishlist}
+          className={`absolute top-2.5 right-2.5 p-2 rounded-full backdrop-blur-md transition-all duration-200 z-10 ${
+            isInWishlist
+              ? "bg-red-600/90 text-white shadow-lg"
+              : "bg-black/60 text-zinc-300 hover:text-white hover:bg-black/80"
+          }`}
+          aria-label={isInWishlist ? "Favorilerden Çıkar" : "Favorilere Ekle"}
+        >
+          <Heart
+            className={`w-3.5 h-3.5 ${
+              isInWishlist ? "fill-white text-white" : ""
+            }`}
+          />
+        </button>
 
         {/* Quick Add Button */}
         <button
