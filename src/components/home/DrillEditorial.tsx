@@ -64,41 +64,41 @@ export function DrillEditorial() {
             </div>
           </div>
 
-          {/* Right Visual Grid (7 cols) with Live Looping Video & Lookbook Frame */}
+          {/* Right Visual Grid (7 cols) with Clean High-Fashion Photographs */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Item 1: Live Video Loop Frame */}
-            <div className="relative h-[340px] sm:h-[460px] rounded-3xl overflow-hidden border border-zinc-800 group shadow-2xl bg-zinc-950">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
-              >
-                <source src="/videos/hero-traffic-night.webm" type="video/webm" />
-              </video>
+            {/* Item 1: Underground Editorial Shoot */}
+            <Link
+              href="/editorial"
+              className="relative h-[340px] sm:h-[460px] rounded-3xl overflow-hidden border border-zinc-850 hover:border-red-500/80 group block shadow-2xl transition-all duration-500 hover:-translate-y-1 bg-zinc-950"
+            >
+              <Image
+                src="/images/brand/drill-editorial-1.webp"
+                alt="The Drill Collection Shoot"
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover object-center group-hover:scale-108 transition-transform duration-700 filter contrast-110"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
-              {/* Video Tag Overlays */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[10px] font-mono">
-                <span className="bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 text-red-500 font-bold flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping" />
-                  <span>REC 00:44:12</span>
-                </span>
-                <span className="bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 text-zinc-300">
-                  UNDERGROUND DRILL
+              <div className="absolute top-4 left-4 z-10">
+                <span className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-white font-mono text-[10px] font-bold uppercase">
+                  DRILL SİLÜETLERİ
                 </span>
               </div>
 
-              <div className="absolute bottom-5 left-5 right-5 z-10 space-y-1">
+              <div className="absolute bottom-6 left-6 right-6 z-10 space-y-1.5">
                 <span className="text-[10px] font-mono text-red-400 uppercase font-black">
-                  SOKAK ÇEKİMLERİ
+                  EDİTORYAL LOOKBOOK 01
                 </span>
-                <h4 className="text-lg font-black text-white uppercase font-mono">
-                  TUNNEL SQUAD MOTION
+                <h4 className="text-xl font-black text-white uppercase font-mono">
+                  TUNNEL SQUAD DRILL
                 </h4>
+                <span className="text-xs font-mono text-zinc-300 flex items-center gap-1.5 pt-1">
+                  <span>İNCELE</span>
+                  <MoveUpRight className="w-3.5 h-3.5 text-red-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </span>
               </div>
-            </div>
+            </Link>
 
             {/* Item 2: Amsterdam / Istanbul Collection Lookbook Card */}
             <Link

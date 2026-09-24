@@ -259,8 +259,8 @@ export const PRODUCTS: Product[] = [
     colors: ["Ham İndigo", "Kömür Siyah"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
-      "/images/products/flannel-shirt-model.webp",
       "/images/products/flannel-shirt.webp",
+      "/images/products/flannel-shirt-model.webp",
     ],
     shortDescription: "12 oz sert Japon ham selvedge denim kumaş, fermuarlı ceket-gömlek hibrit kalıp.",
     description: "Hem tek başına gömlek hem de hoodie üzerine ceket gibi kombinlenebilen çok yönlü parça. Ağır mat metal fermuar ve taktiksel göğüs cepleri.",
@@ -284,8 +284,8 @@ export const PRODUCTS: Product[] = [
     colors: ["Mat Siyah", "Kemik Beyaz"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
-      "/images/products/drill-acid-wash-tee-model.webp",
       "/images/products/drill-acid-wash-tee.webp",
+      "/images/products/drill-acid-wash-tee-model.webp",
     ],
     shortDescription: "300 GSM ağır penye, arka panelde çatlama yapmayan kabartma Baggy Street drill grafiği.",
     description: "Sokak sanatının ruhunu taşıyan özel graffiti nakış ve serigrafi baskı kombinasyonu. Boyun arkasında dokuma seri numarası etiketi.",

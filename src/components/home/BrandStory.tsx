@@ -3,17 +3,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MoveUpRight, Volume2, VolumeX, Film, Camera } from "lucide-react";
+import { ArrowRight, MoveUpRight, Volume2, VolumeX } from "lucide-react";
 import {
   DrillCrosshairSvg,
   HeavyStitchSvg,
   RazorBladeSvg,
   StreetCoordinatesSvg,
-  BarcodeTagSvg,
 } from "@/components/common/StreetIcons";
 
 export function BrandStory() {
-  const [activeMedia, setActiveMedia] = useState<"image" | "video">("video");
   const [audioActive, setAudioActive] = useState(true);
 
   return (
@@ -96,7 +94,7 @@ export function BrandStory() {
               Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM saf Fransız havlu pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.
             </p>
 
-            {/* 4 Interactive Fabric Anatomy Pills */}
+            {/* 4 Fabric Anatomy Pills */}
             <div className="grid grid-cols-2 gap-2 pt-2 text-xs font-mono">
               <div className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
                 <HeavyStitchSvg size={18} className="text-red-500 shrink-0" />
@@ -136,100 +134,31 @@ export function BrandStory() {
             </div>
           </div>
 
-          {/* Right Column: Interactive Video / Photo Viewer (6 cols) */}
+          {/* Right Column: Clean Editorial Visual (No Video Switcher) */}
           <div className="lg:col-span-6 relative">
-            {/* View Selector Tabs */}
-            <div className="flex items-center gap-2 mb-3">
-              <button
-                type="button"
-                onClick={() => setActiveMedia("video")}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all ${
-                  activeMedia === "video"
-                    ? "bg-red-600 text-white shadow-lg"
-                    : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"
-                }`}
-              >
-                <Film className="w-3.5 h-3.5" />
-                <span>CANLI SOKAK REEL [VİDEO]</span>
-              </button>
+            <div className="relative h-[460px] sm:h-[540px] rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl group bg-zinc-950">
+              <Image
+                src="/images/brand/brand-story.webp"
+                alt="From Istanbul to the World - Baggy Street Editorial"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter contrast-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20" />
 
-              <button
-                type="button"
-                onClick={() => setActiveMedia("image")}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold uppercase transition-all ${
-                  activeMedia === "image"
-                    ? "bg-white text-black shadow-lg"
-                    : "bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800"
-                }`}
-              >
-                <Camera className="w-3.5 h-3.5" />
-                <span>FOTOĞRAF ÇEKİMİ</span>
-              </button>
-            </div>
-
-            {/* Media Box */}
-            <div className="relative h-[440px] sm:h-[520px] rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl group bg-zinc-950">
-              {activeMedia === "video" ? (
-                <div className="relative w-full h-full">
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover filter contrast-125 brightness-95 group-hover:scale-105 transition-transform duration-700"
-                  >
-                    <source src="/videos/hero-skyline-night.webm" type="video/webm" />
-                  </video>
-
-                  {/* Camera HUD Overlays */}
-                  <div className="absolute inset-0 pointer-events-none p-5 flex flex-col justify-between z-20">
-                    <div className="flex items-center justify-between text-[11px] font-mono">
-                      <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 text-red-500 font-bold">
-                        <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" />
-                        <span>LIVE 4K DRILL CAM</span>
-                      </div>
-                      <span className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 text-zinc-300">
-                        ISTANBUL NIGHT RUN
-                      </span>
-                    </div>
-
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <DrillCrosshairSvg size={44} className="text-red-500/80 animate-pulse" />
-                    </div>
-
-                    <div className="flex items-end justify-between text-[11px] font-mono">
-                      <span className="bg-black/80 backdrop-blur-md px-3 py-1 rounded border border-white/10 text-white font-bold">
-                        VOL. 2026 ARCHIVE
-                      </span>
-                      <BarcodeTagSvg size={28} className="text-white hidden sm:block" />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/images/brand/brand-story.webp"
-                    alt="From Istanbul to the World - Baggy Street Editorial"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20" />
-
-                  <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end text-xs font-mono text-zinc-300">
-                    <span className="bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 text-white font-bold">
-                      EDİTORYAL VOL. 01
-                    </span>
-                    <span className="text-zinc-400 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded border border-white/10">
-                      41.0082° N, 28.9784° E
-                    </span>
-                  </div>
-                </div>
-              )}
+              <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end text-xs font-mono text-zinc-300 z-10">
+                <span className="bg-black/80 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/10 text-white font-bold">
+                  EDİTORYAL ÇEKİM // VOL. 01
+                </span>
+                <span className="text-zinc-400 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                  41.0082° N, 28.9784° E
+                </span>
+              </div>
             </div>
 
             {/* Asymmetric Red Accent Border Underneath */}
-            <div className="hidden sm:block absolute -bottom-4 -left-4 w-full h-full rounded-2xl border-2 border-red-500/20 -z-10 pointer-events-none" />
+            <div className="hidden sm:block absolute -bottom-4 -left-4 w-full h-full rounded-3xl border-2 border-red-500/20 -z-10 pointer-events-none" />
           </div>
         </div>
       </div>
