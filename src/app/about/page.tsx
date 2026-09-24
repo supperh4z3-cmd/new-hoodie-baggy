@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin, Sparkles, Shield, Compass } from "lucide-react";
-import { Logo } from "@/components/layout/Logo";
+import { ArrowRight, Sparkles, Shield, Compass } from "lucide-react";
 
 export const metadata = {
   title: "OUR STORY | BAGGY STREET — Amsterdam & Istanbul Streetwear",

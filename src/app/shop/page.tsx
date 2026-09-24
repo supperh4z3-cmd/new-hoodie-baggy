@@ -46,7 +46,7 @@ function ShopContent() {
       result.sort((a, b) => b.price - a.price);
     } else {
       // default: newest
-      result.sort((a, b) => (a.badge === "NEW" ? -1 : 1));
+      result.sort((a) => (a.badge === "NEW" ? -1 : 1));
     }
 
     return result;

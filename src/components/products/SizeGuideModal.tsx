@@ -6,10 +6,10 @@ import { X, Ruler } from "lucide-react";
 interface SizeGuideModalProps {
   isOpen: boolean;
   onClose: () => void;
-  category: string;
+  category?: string;
 }
 
-export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProps) {
+export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps) {
   if (!isOpen) return null;
 
   return (

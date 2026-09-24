@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, User, ShoppingBag, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
@@ -17,6 +17,8 @@ export function Navbar() {
 
   const openCart = useCartStore((state) => state.openCart);
   const totalItemCount = useCartStore((state) => state.getTotalItemCount());
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,7 +133,8 @@ export function Navbar() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && searchQuery.trim()) {
-                    window.location.href = `/shop?q=${encodeURIComponent(searchQuery.trim())}`;
+                    router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+                    setSearchOpen(false);
                   }
                 }}
                 className="w-full bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none"

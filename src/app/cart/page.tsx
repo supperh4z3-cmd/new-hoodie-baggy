@@ -24,6 +24,7 @@ export default function CartPage() {
   const [couponInput, setCouponInput] = useState("");
   const [couponMsg, setCouponMsg] = useState<{ text: string; isError: boolean } | null>(null);
   const [checkoutComplete, setCheckoutComplete] = useState(false);
+  const [orderCode, setOrderCode] = useState("");
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +39,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
+    setOrderCode(`BS-${Math.floor(100000 + Math.random() * 900000)}`);
     setCheckoutComplete(true);
     clearCart();
   };
@@ -55,7 +57,7 @@ export default function CartPage() {
           Baggy Street siparişiniz başarıyla oluşturuldu. Sipariş takip numaranız ve kargo bilgilendirmesi e-posta adresinize iletilecektir.
         </p>
         <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-lg inline-block text-xs font-mono text-zinc-300">
-          Sipariş Kodu: #BS-{Math.floor(100000 + Math.random() * 900000)}
+          Sipariş Kodu: #{orderCode}
         </div>
         <div>
           <Link

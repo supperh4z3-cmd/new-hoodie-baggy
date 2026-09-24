@@ -11,7 +11,7 @@ interface RelatedProductsProps {
 
 export function RelatedProducts({ currentProductId, category }: RelatedProductsProps) {
   const related = PRODUCTS.filter((p) => p.id !== currentProductId)
-    .sort((a, b) => (a.category === category ? -1 : 1))
+    .sort((a) => (a.category === category ? -1 : 1))
     .slice(0, 4);
 
   return (
