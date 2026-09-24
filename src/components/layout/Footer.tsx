@@ -49,18 +49,23 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=hoodies" className="hover:text-white transition-colors">
-                  COLLECTIONS
+                <Link href="/editorial" className="hover:text-white transition-colors text-red-400 font-semibold">
+                  LOOKBOOK (EDİTORYAL)
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  ABOUT (HAKKIMIZDA)
+                  OUR STORY (HAKKIMIZDA)
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop?category=hoodies" className="hover:text-white transition-colors">
+                  KAPÜŞONLU & HOODIE
                 </Link>
               </li>
               <li>
                 <Link href="/shop?category=sweatpants" className="hover:text-white transition-colors">
-                  SWEATPANTS
+                  BAGGY EŞOFMAN
                 </Link>
               </li>
               <li>

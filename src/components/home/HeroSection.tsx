@@ -28,11 +28,11 @@ const HERO_SLIDES: HeroSlide[] = [
     src: "/videos/hero-night-city.webm",
     poster: "/images/hero/hero-bg.webp",
     coordinates: "41.0082° N, 28.9784° E",
-    city: "ISTANBUL",
-    badge: "STREETWEAR REDEFINED",
+    city: "İSTANBUL",
+    badge: "SOKAK MODASI YENİDEN TANIMLANDI",
     useLogo: true,
-    tagline: "Same City Different Mindset",
-    ctaText: "SHOP NOW",
+    tagline: "Aynı Şehir, Farklı Bakış Açısı",
+    ctaText: "HEMEN KEŞFET",
     ctaLink: "/shop",
   },
   {
@@ -41,24 +41,37 @@ const HERO_SLIDES: HeroSlide[] = [
     src: "/videos/hero-traffic-night.webm",
     poster: "/images/hero/hero-bg.webp",
     coordinates: "52.3676° N, 4.9041° E",
-    city: "AMSTERDAM & ISTANBUL",
-    badge: "THE DRILL COLLECTION 2026",
-    headline: "FROM THE STREETS TO THE WORLD",
-    tagline: "More Than Clothes It's A Lifestyle",
-    ctaText: "DRILL DROP KEŞFET",
+    city: "AMSTERDAM & İSTANBUL",
+    badge: "2026 DRILL KOLEKSİYONU",
+    headline: "SOKAKLARDAN DÜNYAYA",
+    tagline: "Sıradan Kıyafetlerin Ötesinde Bir Yaşam Tarzı",
+    ctaText: "YENİ DROP'U İNCELE",
     ctaLink: "/shop?category=hoodies",
   },
   {
     id: "slide-3",
+    type: "video",
+    src: "/videos/hero-skyline-night.webm",
+    poster: "/images/hero/hero-bg.webp",
+    coordinates: "460 GSM SAF FRANSIZ PAMUKLU",
+    city: "SINIRLI SERİ",
+    badge: "TAVİZSİZ TOK KALIPLAR",
+    headline: "OVERSIZE & BAGGY KESİMLER",
+    tagline: "Yıllar Boyu Formunu Kaybetmeyen Dik Duruş",
+    ctaText: "EŞOFMAN & HOODIE",
+    ctaLink: "/shop?category=sweatpants",
+  },
+  {
+    id: "slide-4",
     type: "image",
     src: "/images/hero/hero-bg.webp",
-    coordinates: "460 GSM HEAVYWEIGHT",
-    city: "LIMITED EDITION",
-    badge: "RAW & UNCOMPROMISED",
-    headline: "OVERSIZED BAGGY SILHOUETTES",
-    tagline: "Raw Street Energy Built To Last",
-    ctaText: "BAGGY & SWEATS",
-    ctaLink: "/shop?category=sweatpants",
+    coordinates: "14.5 OZ JAPON DENİMİ",
+    city: "ÖZEL ATÖLYE SERİSİ",
+    badge: "GENİŞ PAÇA VINTAGE DENİM",
+    headline: "SOKAĞIN GERÇEK ZIRHI",
+    tagline: "Tasarım ve Üretim %100 İstanbul",
+    ctaText: "TÜM KOLEKSİYON",
+    ctaLink: "/shop",
   },
 ];
 
@@ -68,12 +81,12 @@ export function HeroSection() {
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Auto-advance slides every 7 seconds if playing
+  // 6.5 saniyede bir otomatik kaydırma
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 7000);
+    }, 6500);
     return () => clearInterval(interval);
   }, [isPlaying]);
 
@@ -96,7 +109,7 @@ export function HeroSection() {
 
   return (
     <section className="relative w-full min-h-[92vh] md:min-h-[96vh] flex flex-col justify-between overflow-hidden bg-black select-none">
-      {/* Background Media Layers (Cross-fade between slides) */}
+      {/* Arka Plan Medya Katmanları (Videolar ve Geçişler) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {HERO_SLIDES.map((slide, idx) => {
           const isActive = idx === currentIdx;
@@ -132,7 +145,7 @@ export function HeroSection() {
                 />
               )}
 
-              {/* Cinematic Vignettes & Dark Streetwear Overlays */}
+              {/* Sinematik Vinyet & Karanlık Sokak Katmanları */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/75 pointer-events-none" />
               <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/35 to-black/90 pointer-events-none" />
             </div>
@@ -140,7 +153,7 @@ export function HeroSection() {
         })}
       </div>
 
-      {/* Top Overlays: Coordinates & Status */}
+      {/* Üst Bilgi Satırı: Koordinatlar ve Rozet */}
       <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex items-center justify-between text-[11px] font-mono tracking-widest text-zinc-400">
         <div className="flex flex-col">
           <span className="text-white font-bold">{activeSlide.coordinates}</span>
@@ -148,69 +161,69 @@ export function HeroSection() {
         </div>
 
         <div className="text-right">
-          <span className="text-red-500 font-bold tracking-widest uppercase bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-red-950/60">
+          <span className="text-red-500 font-bold tracking-widest uppercase bg-black/60 backdrop-blur-md px-3 py-1 rounded border border-red-950/60 shadow-lg">
             {activeSlide.badge}
           </span>
         </div>
       </div>
 
-      {/* Center Branding & Action (Animated Slide Content) */}
+      {/* Orta Alan: Dinamik Başlık, Logo ve Aksiyonlar */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 text-center my-auto py-10 flex flex-col items-center">
-        {/* Dynamic Display: Logo or Bold Editorial Headline */}
+        {/* Logo veya Türkçe Çarpıcı Başlık */}
         <div className="mb-6 drop-shadow-[0_12px_45px_rgba(0,0,0,0.95)] transition-all duration-700 animate-in fade-in zoom-in-95">
           {activeSlide.useLogo ? (
             <Logo size="xl" />
           ) : (
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white font-mono leading-none drop-shadow-[0_4px_30px_rgba(0,0,0,1)]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase text-white font-mono leading-none drop-shadow-[0_4px_30px_rgba(0,0,0,1)]">
               {activeSlide.headline}
             </h1>
           )}
         </div>
 
-        {/* Streetwear Categories Breadcrumb / Quick Links */}
+        {/* Türkçe Kategori Hızlı Linkleri */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-mono tracking-widest text-zinc-300 font-semibold mb-8 uppercase">
           <Link href="/shop?category=hoodies" className="hover:text-white transition-colors">
-            HOODIES
+            KAPÜŞONLU
           </Link>
           <span className="text-zinc-600">/</span>
           <Link href="/shop?category=sweatpants" className="hover:text-white transition-colors">
-            SWEATPANTS
+            EŞOFMAN ALTI
           </Link>
           <span className="text-zinc-600">/</span>
           <Link href="/shop?category=jackets" className="hover:text-white transition-colors">
-            JACKETS
+            CEKET
           </Link>
           <span className="text-zinc-600">/</span>
           <Link href="/shop?category=jeans" className="hover:text-white transition-colors">
-            JEANS
+            JEAN
           </Link>
           <span className="text-zinc-600">/</span>
           <Link href="/shop" className="hover:text-white transition-colors">
-            MORE
+            TÜMÜ
           </Link>
         </div>
 
-        {/* Primary CTA Button */}
+        {/* Ana Buton (Türkçe) */}
         <Link
           href={activeSlide.ctaLink}
-          className="group inline-flex items-center gap-3 bg-zinc-950/90 hover:bg-white text-white hover:text-black border border-zinc-700/90 hover:border-white px-9 py-4 rounded text-xs font-mono font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 shadow-2xl"
+          className="group inline-flex items-center gap-3 bg-zinc-950/90 hover:bg-white text-white hover:text-black border border-zinc-700/90 hover:border-white px-9 py-4 rounded-xl text-xs font-mono font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-300 shadow-2xl"
         >
           <span>{activeSlide.ctaText}</span>
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
         </Link>
       </div>
 
-      {/* Bottom Bar: Slider Nav, Video Controls & Script Text */}
+      {/* Alt Kontrol Barı: Slider Geçişleri, Video Ses/Oynatma ve Türkçe Slogan */}
       <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Controls Container (Left) */}
+        {/* Kontrol Butonları */}
         <div className="flex items-center gap-4">
-          {/* Arrow Buttons */}
+          {/* İleri / Geri Okları */}
           <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={handlePrev}
               className="p-2 rounded-full bg-black/60 hover:bg-white text-white hover:text-black border border-white/10 hover:border-white transition-all backdrop-blur-md"
-              aria-label="Önceki Slide"
+              aria-label="Önceki Video"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -218,13 +231,13 @@ export function HeroSection() {
               type="button"
               onClick={handleNext}
               className="p-2 rounded-full bg-black/60 hover:bg-white text-white hover:text-black border border-white/10 hover:border-white transition-all backdrop-blur-md"
-              aria-label="Sonraki Slide"
+              aria-label="Sonraki Video"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Slide Indicators with Progress Fill */}
+          {/* Slayt İlerleme Çubukları */}
           <div className="flex items-center gap-2">
             {HERO_SLIDES.map((slide, idx) => (
               <button
@@ -233,15 +246,15 @@ export function HeroSection() {
                 onClick={() => setCurrentIdx(idx)}
                 className={`h-1.5 rounded-full transition-all duration-500 ${
                   idx === currentIdx
-                    ? "w-8 bg-red-600"
+                    ? "w-8 bg-red-600 shadow-lg shadow-red-900/60"
                     : "w-2 bg-zinc-700 hover:bg-zinc-500"
                 }`}
-                aria-label={`Slide ${idx + 1}`}
+                aria-label={`Slayt ${idx + 1}`}
               />
             ))}
           </div>
 
-          {/* Video Audio Control */}
+          {/* Ses Aç / Kapat */}
           <button
             type="button"
             onClick={toggleMute}
@@ -252,7 +265,7 @@ export function HeroSection() {
             {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
           </button>
 
-          {/* Play/Pause Control */}
+          {/* Oynat / Durdur */}
           <button
             type="button"
             onClick={() => setIsPlaying(!isPlaying)}
@@ -264,7 +277,7 @@ export function HeroSection() {
           </button>
         </div>
 
-        {/* Script Text (Right) */}
+        {/* Türkçe Slogan */}
         <span className="font-serif italic text-sm text-zinc-400 tracking-wide select-none">
           {activeSlide.tagline}
         </span>

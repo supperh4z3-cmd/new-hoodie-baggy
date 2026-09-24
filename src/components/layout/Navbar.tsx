@@ -31,9 +31,9 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "SHOP", href: "/shop" },
-    { name: "COLLECTIONS", href: "/shop?category=hoodies" },
-    { name: "ABOUT", href: "/about" },
+    { name: "KOLEKSİYON", href: "/shop" },
+    { name: "LOOKBOOK", href: "/editorial" },
+    { name: "HİKAYEMİZ", href: "/about" },
   ];
 
   return (

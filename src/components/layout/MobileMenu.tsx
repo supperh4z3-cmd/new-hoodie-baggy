@@ -115,11 +115,25 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </Link>
 
             <Link
+              href="/editorial"
+              onClick={onClose}
+              className="text-base font-black tracking-widest uppercase hover:text-red-500 transition-colors flex items-center justify-between p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-850"
+            >
+              <div className="flex items-center gap-2">
+                <span>LOOKBOOK / EDİTORYAL</span>
+                <span className="bg-zinc-800 text-red-400 text-[9px] font-mono px-1.5 py-0.5 rounded uppercase font-bold border border-red-900/50">
+                  35MM
+                </span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-zinc-500" />
+            </Link>
+
+            <Link
               href="/about"
               onClick={onClose}
               className="text-base font-black tracking-widest uppercase hover:text-red-500 transition-colors flex items-center justify-between p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-850"
             >
-              <span>OUR STORY (LOOKBOOK)</span>
+              <span>HİKAYEMİZ & MANİFESTO</span>
               <ArrowRight className="w-4 h-4 text-zinc-500" />
             </Link>
           </nav>
