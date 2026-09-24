@@ -210,7 +210,7 @@ export const PRODUCTS: Product[] = [
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
       "/images/products/flannel-shirt.webp",
-      "/images/categories/shirts-cat.webp",
+      "/images/products/flannel-shirt-model.webp",
     ],
     shortDescription: "380 GSM ağır fırçalanmış flanel kumaş, metal çıtçıtlar ve boxy işçi kesimi.",
     description: "Sert sokak rüzgarlarına karşı ceket olarak da kullanılabilen kalın tok dokuma. Düşük omuzlar, geniş çift göğüs cebi ve yıpranma önleyici çift dikiş mimarisi.",
@@ -235,7 +235,7 @@ export const PRODUCTS: Product[] = [
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
       "/images/products/drill-acid-wash-tee.webp",
-      "/images/categories/tshirts-cat.webp",
+      "/images/products/drill-acid-wash-tee-model.webp",
     ],
     shortDescription: "300 GSM saf kompakt penye pamuk, vintage acid wash eskitme efektli oversize t-shirt.",
     description: "İnce t-shirtlere son: 300 GSM ağır gramajlı tok kumaş sayesinde gövdede dik ve hacimli durur. Kalın ribanalı yaka esnemez, çift dikişli kenarlar sarkmaz.",
@@ -259,7 +259,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Ham İndigo", "Kömür Siyah"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
-      "/images/categories/shirts-cat.webp",
+      "/images/products/flannel-shirt-model.webp",
       "/images/products/flannel-shirt.webp",
     ],
     shortDescription: "12 oz sert Japon ham selvedge denim kumaş, fermuarlı ceket-gömlek hibrit kalıp.",
@@ -284,7 +284,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Mat Siyah", "Kemik Beyaz"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
-      "/images/categories/tshirts-cat.webp",
+      "/images/products/drill-acid-wash-tee-model.webp",
       "/images/products/drill-acid-wash-tee.webp",
     ],
     shortDescription: "300 GSM ağır penye, arka panelde çatlama yapmayan kabartma Baggy Street drill grafiği.",
