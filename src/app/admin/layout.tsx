@@ -30,6 +30,8 @@ export default function AdminLayout({
     pageTitle = 'ÜRÜN & STOK KATALOĞU';
   } else if (pathname?.startsWith('/admin/coupons')) {
     pageTitle = 'İNDİRİM KUPONLARI';
+  } else if (pathname?.startsWith('/admin/content')) {
+    pageTitle = 'SİTE İÇERİK YÖNETİMİ (CMS)';
   }
 
   return (

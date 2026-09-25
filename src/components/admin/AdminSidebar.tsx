@@ -8,6 +8,7 @@ import {
   PackageCheck,
   Shirt,
   TicketPercent,
+  SlidersHorizontal,
   ExternalLink,
   X,
   ShieldAlert,
@@ -41,6 +42,12 @@ const NAV_ITEMS = [
     name: 'Kupon Yönetimi',
     href: '/admin/coupons',
     icon: TicketPercent,
+    exact: false,
+  },
+  {
+    name: 'Site İçerikleri (CMS)',
+    href: '/admin/content',
+    icon: SlidersHorizontal,
     exact: false,
   },
 ];
