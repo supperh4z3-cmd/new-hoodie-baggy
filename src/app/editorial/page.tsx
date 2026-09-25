@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -172,6 +172,33 @@ export default function EditorialPage() {
 
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
+
+  // Lock body scroll and handle ESC when lightbox is active
+  useEffect(() => {
+    if (!lightboxLook) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalOverscroll = document.body.style.overscrollBehavior;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxLook(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.overscrollBehavior = originalOverscroll;
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxLook]);
 
   const filteredLooks = EDITORIAL_LOOKS.filter((look) => {
     if (selectedCategory === "all") return true;
@@ -438,8 +465,14 @@ export default function EditorialPage() {
 
       {/* 4. ANALOG FİLM LIGHTBOX MODAL (BÜYÜK DETAY EKRANI) */}
       {lightboxLook && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-300">
-          <div className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+        <div
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-300 overflow-hidden w-full max-w-full pointer-events-auto"
+          style={{ touchAction: "none" }}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] overscroll-contain box-border"
+            style={{ touchAction: "pan-y" }}
+          >
             {/* Kapat Butonu */}
             <button
               type="button"

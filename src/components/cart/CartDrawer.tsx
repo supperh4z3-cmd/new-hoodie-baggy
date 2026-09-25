@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { X, ShoppingBag, ArrowRight, ShieldCheck, Tag } from "lucide-react";
+import Image from "next/image";
+import { X, ShoppingBag, ArrowRight, ShieldCheck, Tag, Plus, Sparkles } from "lucide-react";
 import { useCartStore } from "@/lib/store/useCartStore";
+import { PRODUCTS } from "@/lib/data/products";
 import { FreeShippingBar } from "./FreeShippingBar";
 import { CartItemRow } from "./CartItemRow";
 import { formatPrice } from "@/lib/utils";
@@ -12,6 +14,7 @@ export function CartDrawer() {
   const isOpen = useCartStore((state) => state.isOpen);
   const closeCart = useCartStore((state) => state.closeCart);
   const items = useCartStore((state) => state.items);
+  const addItem = useCartStore((state) => state.addItem);
   const totalItemCount = useCartStore((state) => state.getTotalItemCount());
   const subtotal = useCartStore((state) => state.getSubtotal());
   const discountAmount = useCartStore((state) => state.getDiscountAmount());
@@ -23,6 +26,10 @@ export function CartDrawer() {
 
   const [couponInput, setCouponInput] = useState("");
   const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
+
+  const suggestedProduct = PRODUCTS.find(
+    (p) => !items.some((it) => it.product.id === p.id) && (p.category === "accessories" || p.category === "tshirts")
+  ) || PRODUCTS[0];
 
   // Prevent background scroll and horizontal gestures on mobile when drawer is open
   useEffect(() => {
@@ -133,7 +140,58 @@ export function CartDrawer() {
               </Link>
             </div>
           ) : (
-            items.map((item) => <CartItemRow key={item.id} item={item} />)
+            <>
+              {items.map((item) => (
+                <CartItemRow key={item.id} item={item} />
+              ))}
+
+              {/* Cross-Sell Outfit Completer */}
+              {suggestedProduct && (
+                <div className="py-4">
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-2 font-bold">
+                    <Sparkles className="w-3.5 h-3.5 text-red-500" />
+                    <span>KOMBİNİNİ TAMAMLA (ÖNERİLEN DROP)</span>
+                  </div>
+                  <div className="p-3 bg-zinc-900/60 border border-zinc-800 rounded-xl flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="relative w-12 h-14 bg-zinc-950 rounded-lg overflow-hidden shrink-0 border border-zinc-800">
+                        <Image
+                          src={suggestedProduct.images[0]}
+                          alt={suggestedProduct.name}
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-xs font-bold text-white uppercase truncate block">
+                          {suggestedProduct.name}
+                        </span>
+                        <span className="text-xs font-mono text-red-400 font-bold">
+                          {formatPrice(suggestedProduct.price)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        addItem(
+                          suggestedProduct,
+                          suggestedProduct.sizes[0] || "L",
+                          suggestedProduct.colors[0],
+                          1
+                        )
+                      }
+                      className="inline-flex items-center gap-1 bg-white hover:bg-zinc-200 text-black text-[11px] font-mono font-bold px-3 py-2 rounded-lg uppercase tracking-wider transition-colors shrink-0"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>EKLE</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
 

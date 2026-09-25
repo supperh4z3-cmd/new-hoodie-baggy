@@ -14,6 +14,9 @@ import {
   Lock,
   ArrowRight,
   Loader2,
+  Copy,
+  Check,
+  MessageSquare,
 } from "lucide-react";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { formatPrice } from "@/lib/utils";
@@ -43,6 +46,8 @@ export default function CheckoutPage() {
   });
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("credit-card");
+  const [ibanCopied, setIbanCopied] = useState(false);
+  const [notifyWhatsapp, setNotifyWhatsapp] = useState(true);
   const [cardData, setCardData] = useState({
     cardHolder: "MEHMET YILMAZ",
     cardNumber: "4543 •••• •••• 8821",
@@ -331,6 +336,22 @@ export default function CheckoutPage() {
                   </span>
                 )}
               </div>
+
+              {/* WhatsApp Notification Option */}
+              <div className="sm:col-span-2 pt-1">
+                <label className="flex items-center gap-2.5 p-3 rounded-lg bg-zinc-900/60 border border-zinc-800 cursor-pointer select-none text-xs font-mono text-zinc-300 hover:border-zinc-700 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={notifyWhatsapp}
+                    onChange={(e) => setNotifyWhatsapp(e.target.checked)}
+                    className="w-4 h-4 rounded bg-zinc-900 border-zinc-700 text-red-600 focus:ring-0"
+                  />
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Kargo takip ve sipariş durumumu WhatsApp üzerinden anlık mesaj olarak bildir.</span>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -492,10 +513,47 @@ export default function CheckoutPage() {
                 <p className="text-zinc-300">
                   Lütfen sipariş tutarını aşağıdaki banka hesabına havale/EFT yaparken açıklama kısmına <strong>Adınızı ve Sipariş Kodunuzu</strong> ekleyiniz.
                 </p>
-                <div className="bg-black/60 p-4 rounded border border-zinc-800 space-y-2 text-zinc-300">
-                  <div><strong>Banka:</strong> Garanti BBVA</div>
-                  <div><strong>Alıcı:</strong> BAGGY STREET TEKSTİL A.Ş.</div>
-                  <div><strong>IBAN:</strong> TR42 0006 2000 0001 2345 6789 01</div>
+                <div className="bg-black/60 p-4 rounded-xl border border-zinc-800 space-y-2.5 text-zinc-300">
+                  <div className="flex justify-between items-center">
+                    <span><strong>Banka:</strong> Garanti BBVA</span>
+                    <span className="text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-900/50 text-[10px]">
+                      %5 HAVALE İNDİRİMİ
+                    </span>
+                  </div>
+                  <div><strong>Hesap Sahibi:</strong> BAGGY STREET TEKSTİL A.Ş.</div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-zinc-850">
+                    <div>
+                      <span className="text-[10px] text-zinc-500 block">IBAN NUMARASI:</span>
+                      <span className="text-white font-bold select-all tracking-wider text-xs sm:text-sm">
+                        TR42 0006 2000 0001 2345 6789 01
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText("TR420006200000012345678901");
+                        setIbanCopied(true);
+                        setTimeout(() => setIbanCopied(false), 2000);
+                      }}
+                      className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold transition-all shrink-0 ${
+                        ibanCopied
+                          ? "bg-emerald-600 text-white shadow-lg shadow-emerald-950"
+                          : "bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700"
+                      }`}
+                    >
+                      {ibanCopied ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>KOPYALANDI!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>IBAN KOPYALA</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

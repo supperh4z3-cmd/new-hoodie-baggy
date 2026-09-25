@@ -167,6 +167,7 @@ export function Navbar() {
               )}
               <Link
                 href={`/shop?q=${encodeURIComponent(searchQuery.trim())}`}
+                onClick={() => setSearchOpen(false)}
                 className="text-xs bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded uppercase font-mono tracking-wider"
               >
                 ARA

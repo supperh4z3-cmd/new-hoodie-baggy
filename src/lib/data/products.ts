@@ -138,7 +138,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Pitch Black"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
-      "/images/products/drill-logo-hoodie.webp",
+      "/images/products/amsterdam-night-hoodie.webp",
       "/images/products/drill-logo-hoodie-back.webp",
     ],
     shortDescription: "Amsterdam gece kanallarından ilham alan reflektif dikişli ağır kapüşonlu.",
@@ -162,6 +162,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Washed Black", "Olive Tint"],
     sizes: ["S", "M", "L", "XL"],
     images: [
+      "/images/products/distressed-cargo-jeans-model.webp",
       "/images/products/wide-leg-jeans.webp",
     ],
     shortDescription: "Çok cepli kargo detaylı, hafif eskitmeli dayanıklı drill denim pantolon.",
@@ -185,6 +186,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Mat Siyah"],
     sizes: ["M", "L"],
     images: [
+      "/images/products/drill-beanie-chain-set.webp",
       "/images/categories/accessories-cat.webp",
     ],
     shortDescription: "Yün karışımlı fitilli bere ve 316L paslanmaz çelik sokak zinciri ikili seti.",
@@ -259,8 +261,8 @@ export const PRODUCTS: Product[] = [
     colors: ["Ham İndigo", "Kömür Siyah"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
+      "/images/products/boxy-raw-work-shirt-model.webp",
       "/images/products/flannel-shirt.webp",
-      "/images/products/flannel-shirt-model.webp",
     ],
     shortDescription: "12 oz sert Japon ham selvedge denim kumaş, fermuarlı ceket-gömlek hibrit kalıp.",
     description: "Hem tek başına gömlek hem de hoodie üzerine ceket gibi kombinlenebilen çok yönlü parça. Ağır mat metal fermuar ve taktiksel göğüs cepleri.",
@@ -284,8 +286,8 @@ export const PRODUCTS: Product[] = [
     colors: ["Mat Siyah", "Kemik Beyaz"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     images: [
+      "/images/products/archival-baggy-logo-tee-model.webp",
       "/images/products/drill-acid-wash-tee.webp",
-      "/images/products/drill-acid-wash-tee-model.webp",
     ],
     shortDescription: "300 GSM ağır penye, arka panelde çatlama yapmayan kabartma Baggy Street drill grafiği.",
     description: "Sokak sanatının ruhunu taşıyan özel graffiti nakış ve serigrafi baskı kombinasyonu. Boyun arkasında dokuma seri numarası etiketi.",

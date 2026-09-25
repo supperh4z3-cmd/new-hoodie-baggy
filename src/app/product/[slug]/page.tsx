@@ -12,6 +12,7 @@ import {
   RotateCcw,
   Shield,
   Sparkles,
+  Flame,
 } from "lucide-react";
 import { getProductBySlug } from "@/lib/data/products";
 import { ProductSize } from "@/lib/types/ecommerce";
@@ -157,6 +158,18 @@ export default function ProductDetailPage(props: PageProps) {
                 <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 pt-0.5">
                   <Sparkles className="w-3.5 h-3.5 shrink-0" />
                   <span>2.000 ₺ üzeri ücretsiz kargo • Peşin fiyatına 3 taksit</span>
+                </div>
+
+                {/* Live Scarcity & Viewing Pulse */}
+                <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] font-mono">
+                  <div className="flex items-center gap-1.5 bg-red-950/70 border border-red-900/60 text-red-400 px-2.5 py-1 rounded-md">
+                    <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse shrink-0" />
+                    <span>Son <strong>3 adet</strong> kaldı</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-zinc-900/90 border border-zinc-800 text-zinc-300 px-2.5 py-1 rounded-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+                    <span>Şu an <strong>14 kişi</strong> inceliyor</span>
+                  </div>
                 </div>
               </div>
 

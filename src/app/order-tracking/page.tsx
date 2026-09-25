@@ -13,6 +13,7 @@ import {
   Search,
   ArrowRight,
   ShieldCheck,
+  MessageSquare,
 } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
@@ -372,9 +373,22 @@ function OrderTrackingContent() {
                 </div>
               </div>
 
+              {/* WhatsApp Live Support Button */}
+              <a
+                href={`https://wa.me/905321234567?text=${encodeURIComponent(
+                  `Merhaba Baggy Street, ${order.code} kodlu siparişim hakkında bilgi almak istiyorum.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold py-3.5 rounded-xl uppercase tracking-wider transition-colors shadow-lg shadow-emerald-950/50"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>WHATSAPP İLE DURUMU SOR</span>
+              </a>
+
               <Link
                 href="/shop"
-                className="w-full flex items-center justify-center gap-2 bg-white hover:bg-zinc-200 text-black text-xs font-bold py-3.5 rounded uppercase tracking-wider transition-colors"
+                className="w-full flex items-center justify-center gap-2 bg-white hover:bg-zinc-200 text-black text-xs font-bold py-3.5 rounded-xl uppercase tracking-wider transition-colors"
               >
                 <span>ALIŞVERİŞE DEVAM ET</span>
                 <ArrowRight className="w-4 h-4" />

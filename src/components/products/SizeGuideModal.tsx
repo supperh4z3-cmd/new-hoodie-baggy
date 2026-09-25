@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { X, Ruler } from "lucide-react";
 
 interface SizeGuideModalProps {
@@ -10,19 +10,55 @@ interface SizeGuideModalProps {
 }
 
 export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps) {
+  // Lock body scroll and listen for Escape key on mobile & desktop
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalOverscroll = document.body.style.overscrollBehavior;
+    const originalTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    document.body.style.touchAction = "pan-y";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.overscrollBehavior = originalOverscroll;
+      document.body.style.touchAction = originalTouchAction;
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 overflow-hidden w-full max-w-full pointer-events-auto"
+      style={{ touchAction: "none" }}
+    >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/85 backdrop-blur-md"
+        className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-xl p-6 sm:p-8 text-white shadow-2xl z-10 animate-in zoom-in-95 duration-200">
+      <div
+        className="relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-xl p-5 sm:p-8 text-white shadow-2xl z-10 animate-in zoom-in-95 duration-200 overflow-hidden box-border max-h-[90vh] overflow-y-auto overscroll-contain"
+        style={{ touchAction: "pan-y" }}
+      >
         <div className="flex items-center justify-between pb-4 border-b border-zinc-850">
           <div className="flex items-center gap-2">
             <Ruler className="w-5 h-5 text-red-500" />
