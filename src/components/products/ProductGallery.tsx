@@ -13,7 +13,7 @@ export function ProductGallery({ images, name, badge }: ProductGalleryProps) {
   const [activeImage, setActiveImage] = useState(images[0] || "/images/products/drill-logo-hoodie.webp");
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4">
+    <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-full min-w-0 overflow-hidden">
       {/* Thumbnail column */}
       {images.length > 1 && (
         <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto shrink-0 no-scrollbar">
@@ -41,7 +41,7 @@ export function ProductGallery({ images, name, badge }: ProductGalleryProps) {
       )}
 
       {/* Main Large Image */}
-      <div className="relative flex-1 aspect-[3/4] sm:aspect-square md:aspect-[4/5] bg-zinc-950 rounded-lg overflow-hidden border border-zinc-850 shadow-2xl">
+      <div className="relative flex-1 min-w-0 aspect-[3/4] sm:aspect-square md:aspect-[4/5] bg-zinc-950 rounded-lg overflow-hidden border border-zinc-850 shadow-2xl">
         <Image
           src={activeImage}
           alt={name}

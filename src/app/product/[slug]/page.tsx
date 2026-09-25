@@ -73,11 +73,11 @@ export default function ProductDetailPage() {
     : null;
 
   return (
-    <div className="bg-[#0b0b10] text-white min-h-screen">
+    <div className="bg-[#0b0b10] text-white min-h-screen w-full max-w-full overflow-x-hidden">
       {/* Subtle Ambient Top Glow for airy depth */}
       <div className="absolute top-20 left-1/3 w-[500px] h-[300px] bg-red-950/15 blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-32 lg:pb-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-32 lg:pb-16 relative z-10 w-full max-w-full overflow-x-hidden box-border">
         {/* Clean Breadcrumb Navigation */}
         <nav className="text-xs font-mono text-zinc-400 mb-8 flex items-center gap-2 flex-wrap">
           <Link href="/" className="hover:text-white transition-colors">
@@ -112,8 +112,8 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Right Column: Clean, Decluttered, High-Contrast Luxury Buy Box (5 cols) */}
-          <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-            <div className="bg-[#121218] border border-zinc-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl space-y-6">
+          <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24 w-full max-w-full min-w-0">
+            <div className="bg-[#121218] border border-zinc-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl space-y-6 w-full max-w-full overflow-hidden box-border">
               {/* 1. Header: Category Badge & Product Title */}
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
@@ -382,11 +382,11 @@ export default function ProductDetailPage() {
 
               {/* 6. Streamlined Specs Tab Widget (Replaces cluttered vertical accordions) */}
               <div className="pt-3 border-t border-zinc-850 space-y-3">
-                <div className="flex border-b border-zinc-800 text-xs font-mono">
+                <div className="flex border-b border-zinc-800 text-xs font-mono overflow-x-auto no-scrollbar">
                   <button
                     type="button"
                     onClick={() => setActiveTab("fabric")}
-                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative ${
+                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative shrink-0 ${
                       activeTab === "fabric"
                         ? "text-white border-b-2 border-red-600"
                         : "text-zinc-400 hover:text-white"
@@ -397,7 +397,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("fit")}
-                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative ${
+                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative shrink-0 ${
                       activeTab === "fit"
                         ? "text-white border-b-2 border-red-600"
                         : "text-zinc-400 hover:text-white"
@@ -408,7 +408,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("shipping")}
-                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative ${
+                    className={`pb-2.5 px-3 uppercase font-bold transition-all relative shrink-0 ${
                       activeTab === "shipping"
                         ? "text-white border-b-2 border-red-600"
                         : "text-zinc-400 hover:text-white"
@@ -478,8 +478,8 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Sticky Mobile Add To Cart Bar */}
-        <div className="lg:hidden fixed bottom-0 inset-x-0 bg-[#0e0e14]/95 backdrop-blur-2xl border-t border-zinc-800/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
-          <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 w-full max-w-full bg-[#0e0e14]/98 backdrop-blur-2xl border-t border-zinc-800/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.85)] box-border overflow-hidden">
+          <div className="flex items-center justify-between gap-3 w-full max-w-md mx-auto min-w-0">
             {/* Price Column */}
             <div className="flex flex-col shrink-0 min-w-0 pr-1">
               <span className="text-[10px] font-mono tracking-wider text-zinc-400 uppercase font-semibold">
@@ -490,35 +490,27 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            {/* Mobile Action Buttons */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <button
-                type="button"
-                onClick={handleAddToCart}
-                className="flex-1 min-w-0 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-mono font-black h-12 px-3 sm:px-4 rounded-xl uppercase tracking-wider shadow-lg shadow-red-950/70 transition-all"
-              >
-                <ShoppingBag className="w-4 h-4 shrink-0" />
-                <span className="truncate">SEPETE EKLE</span>
-                <span className="bg-black/35 border border-white/10 text-white/95 text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0">
-                  {selectedSize}
+            {/* Mobile Action Button */}
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className="flex-1 min-w-0 h-12 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-mono font-black px-4 rounded-xl uppercase tracking-wider shadow-lg shadow-red-950/70 transition-all"
+            >
+              {addedEffect ? (
+                <span className="flex items-center gap-1.5 truncate">
+                  <CheckCircle className="w-4 h-4 shrink-0 text-white" />
+                  <span className="truncate">EKLENDİ!</span>
                 </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleToggleWishlist}
-                className={`w-12 h-12 shrink-0 flex items-center justify-center rounded-xl border transition-all ${
-                  isInWishlist
-                    ? "bg-red-950 border-red-600 text-red-400"
-                    : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
-                }`}
-                aria-label="Favorilere Ekle"
-              >
-                <Heart
-                  className={`w-4 h-4 ${isInWishlist ? "fill-red-500 text-red-500" : ""}`}
-                />
-              </button>
-            </div>
+              ) : (
+                <span className="flex items-center gap-2 truncate">
+                  <ShoppingBag className="w-4 h-4 shrink-0" />
+                  <span className="truncate">SEPETE EKLE</span>
+                  <span className="bg-black/30 border border-white/10 text-white/95 text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0">
+                    {selectedSize}
+                  </span>
+                </span>
+              )}
+            </button>
           </div>
         </div>
 
