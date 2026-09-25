@@ -1,0 +1,100 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("superadmin") // superadmin, manager, support
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String             @id @default(cuid())
+  slug          String             @unique
+  name          String
+  category      String             // hoodies, sweatpants, jackets, jeans, accessories
+  price         Float
+  comparePrice  Float?
+  badge         String?
+  image         String
+  gallery       String             // JSON string of images array
+  description   String
+  inStock       Boolean            @default(true)
+  details       ProductDetails?
+  sizes         ProductSizeStock[]
+  orderItems    OrderItem[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+}
+
+model ProductDetails {
+  id          String   @id @default(cuid())
+  productId   String   @unique
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  fabric      String
+  fit         String
+  gsm         Int
+  origin      String
+  care        String   // JSON string of care instructions array
+}
+
+model ProductSizeStock {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size      String   // S, M, L, XL, XXL
+  stock     Int      @default(0)
+
+  @@unique([productId, size])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique // e.g., "BGY-2026-8921"
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  shippingCity    String
+  shippingAddress String
+  totalAmount     Float
+  status          String      @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  trackingNumber  String?
+  trackingCarrier String?     @default("Yurtiçi Kargo")
+  notes           String?
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  name      String
+  size      String
+  price     Float
+  quantity  Int
+}
+
+model Coupon {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  discount  Float     // e.g. 10 for 10%
+  type      String    @default("PERCENTAGE") // PERCENTAGE, FIXED
+  isActive  Boolean   @default(true)
+  usageCount Int      @default(0)
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
