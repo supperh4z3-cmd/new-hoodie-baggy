@@ -5,13 +5,37 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
 import { PRODUCTS } from "@/lib/data/products";
 import { ProductCard } from "@/components/products/ProductCard";
-import { CategorySlug } from "@/lib/types/ecommerce";
+import { CategorySlug, Product } from "@/lib/types/ecommerce";
 
 type FilterTab = "all" | CategorySlug;
 
 export function LatestDropsCarousel() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (
+          isMounted &&
+          data.success &&
+          Array.isArray(data.products) &&
+          data.products.length > 0
+        ) {
+          setProducts(data.products);
+        }
+      })
+      .catch((err) => {
+        console.warn("LatestDropsCarousel dynamic fetch fallback:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filterTabs: { id: FilterTab; label: string; count?: number }[] = [
     { id: "all", label: "TÜM DROPLAR" },
@@ -22,7 +46,7 @@ export function LatestDropsCarousel() {
     { id: "jeans", label: "DENİM JEANS" },
   ];
 
-  const filteredProducts = PRODUCTS.filter((p) => {
+  const filteredProducts = products.filter((p) => {
     if (activeTab === "all") return true;
     return p.category === activeTab;
   });
@@ -56,7 +80,7 @@ export function LatestDropsCarousel() {
               href="/shop"
               className="text-xs font-mono font-bold tracking-widest text-zinc-400 hover:text-white flex items-center gap-1.5 transition-colors uppercase bg-zinc-900/80 px-3.5 py-2 rounded-lg border border-zinc-800 hover:border-zinc-700"
             >
-              <span>TÜM KOLEKSİYON ({PRODUCTS.length})</span>
+              <span>TÜM KOLEKSİYON ({products.length})</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
 

@@ -15,7 +15,7 @@ import {
   Flame,
 } from "lucide-react";
 import { getProductBySlug } from "@/lib/data/products";
-import { ProductSize } from "@/lib/types/ecommerce";
+import { Product, ProductSize } from "@/lib/types/ecommerce";
 import { useCartStore } from "@/lib/store/useCartStore";
 import { useWishlistStore } from "@/lib/store/useWishlistStore";
 import { useToastStore } from "@/lib/store/useToastStore";
@@ -32,17 +32,16 @@ export default function ProductDetailPage(props: PageProps) {
   const resolvedParams = use(props.params);
   const clientParams = useParams();
   const slug = resolvedParams?.slug || (clientParams?.slug as string);
-  const product = getProductBySlug(slug);
 
-  if (!product) {
-    notFound();
-  }
+  const [product, setProduct] = useState<Product | null>(() => (slug ? getProductBySlug(slug) || null : null));
+  const [loading, setLoading] = useState<boolean>(!product);
+  const [fetchError, setFetchError] = useState<boolean>(false);
 
   const [selectedSize, setSelectedSize] = useState<ProductSize>(
-    product.sizes[0] || "L"
+    product?.sizes[0] || "L"
   );
   const [selectedColor, setSelectedColor] = useState<string>(
-    product.colors[0] || "Siyah"
+    product?.colors[0] || "Siyah"
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -52,8 +51,53 @@ export default function ProductDetailPage(props: PageProps) {
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
   const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
-  const isInWishlist = useWishlistStore((state) => state.isInWishlist(product.id));
+  const isInWishlist = useWishlistStore((state) =>
+    product ? state.isInWishlist(product.id) : false
+  );
   const showToast = useToastStore((state) => state.showToast);
+
+  React.useEffect(() => {
+    if (!product && slug) {
+      let isMounted = true;
+      fetch(`/api/products/${encodeURIComponent(slug)}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Product not found");
+          return res.json();
+        })
+        .then((data) => {
+          if (isMounted && data.product) {
+            setProduct(data.product);
+            if (data.product.sizes?.length) setSelectedSize(data.product.sizes[0]);
+            if (data.product.colors?.length) setSelectedColor(data.product.colors[0]);
+          }
+        })
+        .catch(() => {
+          if (isMounted) setFetchError(true);
+        })
+        .finally(() => {
+          if (isMounted) setLoading(false);
+        });
+
+      return () => {
+        isMounted = false;
+      };
+    }
+  }, [product, slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4 bg-[#0b0b10] text-white">
+        <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
+          Ürün Detayları Yükleniyor...
+        </p>
+      </div>
+    );
+  }
+
+  if (fetchError || !product) {
+    notFound();
+  }
 
   const handleAddToCart = () => {
     addItem(product, selectedSize, selectedColor, quantity);

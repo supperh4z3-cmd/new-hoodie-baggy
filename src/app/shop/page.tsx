@@ -1,15 +1,40 @@
 "use client";
 
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { PRODUCTS } from "@/lib/data/products";
 import { ProductCard } from "@/components/products/ProductCard";
 import { FilterBar } from "@/components/shop/FilterBar";
-import { ProductSize } from "@/lib/types/ecommerce";
+import { Product, ProductSize } from "@/lib/types/ecommerce";
 
 function ShopContent() {
   const searchParams = useSearchParams();
+
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (
+          isMounted &&
+          data.success &&
+          Array.isArray(data.products) &&
+          data.products.length > 0
+        ) {
+          setProducts(data.products);
+        }
+      })
+      .catch((err) => {
+        console.warn("Failed to fetch dynamic products, using fallback:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const category = searchParams.get("category") || "all";
   const size = searchParams.get("size") || "all";
@@ -17,7 +42,7 @@ function ShopContent() {
   const query = (searchParams.get("q") || "").toLowerCase().trim();
 
   const filteredProducts = useMemo(() => {
-    let result = [...PRODUCTS];
+    let result = [...products];
 
     // Filter by category
     if (category !== "all") {
@@ -50,7 +75,7 @@ function ShopContent() {
     }
 
     return result;
-  }, [category, size, sort, query]);
+  }, [category, size, sort, query, products]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
