@@ -189,6 +189,135 @@ async function main() {
   });
 
   console.log(`✅ Seeded sample orders: ${sampleOrder1.orderNumber}, ${sampleOrder2.orderNumber}`);
+
+  // 5. Seed Site Settings (CMS)
+  const defaultHeroSlides = [
+    {
+      id: "slide-1",
+      type: "video",
+      src: "/videos/hero-night-city.webm",
+      poster: "/images/hero/hero-bg.webp",
+      coordinates: "41.0082° N, 28.9784° E",
+      city: "İSTANBUL",
+      badge: "SOKAK MODASI YENİDEN TANIMLANDI",
+      headline: "BAGGY STREET",
+      tagline: "Aynı Şehir, Farklı Bakış Açısı",
+      ctaText: "HEMEN KEŞFET",
+      ctaLink: "/shop",
+    },
+    {
+      id: "slide-2",
+      type: "video",
+      src: "/videos/hero-traffic-night.webm",
+      poster: "/images/hero/hero-bg.webp",
+      coordinates: "52.3676° N, 4.9041° E",
+      city: "AMSTERDAM & İSTANBUL",
+      badge: "2026 DRILL KOLEKSİYONU",
+      headline: "SOKAKLARDAN DÜNYAYA",
+      tagline: "Sıradan Kıyafetlerin Ötesinde Bir Yaşam Tarzı",
+      ctaText: "YENİ DROP'U İNCELE",
+      ctaLink: "/shop?category=hoodies",
+    },
+    {
+      id: "slide-3",
+      type: "video",
+      src: "/videos/hero-skyline-night.webm",
+      poster: "/images/hero/hero-bg.webp",
+      coordinates: "460 GSM SAF FRANSIZ PAMUKLU",
+      city: "SINIRLI SERİ",
+      badge: "TAVİZSİZ TOK KALIPLAR",
+      headline: "OVERSIZE & BAGGY KESİMLER",
+      tagline: "Yıllar Boyu Formunu Kaybetmeyen Dik Duruş",
+      ctaText: "EŞOFMAN & HOODIE",
+      ctaLink: "/shop?category=sweatpants",
+    },
+    {
+      id: "slide-4",
+      type: "video",
+      src: "/videos/hero-street-lights.webm",
+      poster: "/images/hero/hero-bg.webp",
+      coordinates: "GECE SOKAKLARI // İSTANBUL",
+      city: "KADIKÖY & BEYOĞLU",
+      badge: "YENİ GÖMLEK & T-SHIRT DROPLARI",
+      headline: "SOKAK IŞIKLARI ALTINDA",
+      tagline: "Ağır Pamuklu Kumaşlar ve Tavizsiz Dökümler",
+      ctaText: "YENİ DROPLARI KEŞFET",
+      ctaLink: "/shop",
+    },
+  ];
+
+  const defaultAnnouncementBar = {
+    enabled: true,
+    text: "2.000 TL ÜZERİ TÜM TÜRKİYE'YE ÜCRETSİZ KARGO",
+    subtext: "YENİ DROP: ISTANBUL DRILL 2026",
+    linkText: "ŞİMDİ KEŞFET →",
+    linkUrl: "/shop",
+  };
+
+  const defaultEditorialLooks = [
+    {
+      id: "look-1",
+      frameNo: "FRAME [01/07]",
+      title: "UNDERGROUND TUNNEL DRILL",
+      category: "hoodies",
+      subtitle: "Ağır 460 GSM French Terry pamuklu ve çift katmanlı dik duran kapüşon silüeti.",
+      location: "41.0082° N, 28.9784° E / İSTANBUL",
+      cameraInfo: "Leica M6 // Kodak Tri-X 400 B&W // 35mm f/1.4",
+      modelSpecs: "Boy: 1.88 m • Kilo: 78 kg • Beden: L / Oversize",
+      mediaType: "image",
+      mediaSrc: "/images/brand/drill-editorial-1.webp",
+      tags: ["460 GSM", "PITCH BLACK", "HEAVY HOODIE"],
+      featuredProductSlug: "drill-logo-hoodie",
+      quote: "Göz alıcı değil, tehditkar ve tavizsiz bir duruş.",
+    },
+    {
+      id: "look-2",
+      frameNo: "FRAME [02/07]",
+      title: "NIGHT RUNNER OVERSIZED PUFFER",
+      category: "bottoms",
+      subtitle: "Su itici mat ripstop kumaş ve kaz tüyü dolgulu ultra hacimli silüet.",
+      location: "52.3676° N, 4.9041° E / AMSTERDAM",
+      cameraInfo: "Contax T2 // Fujifilm Superia 800 // 38mm f/2.8",
+      modelSpecs: "Boy: 1.82 m • Kilo: 74 kg • Beden: M / Relaxed",
+      mediaType: "image",
+      mediaSrc: "/images/brand/brand-story-models.webp",
+      tags: ["WATER RESISTANT", "MATTE BLACK", "PUFFER JACKET"],
+      featuredProductSlug: "baggy-sweatpants",
+      quote: "Karanlık sokakların fırtınasında tavizsiz koruma.",
+    },
+  ];
+
+  const defaultBrandStory = {
+    badge: "KURALLARI YIKAN SOKAK MODASI",
+    titleLine1: "FROM ISTANBUL",
+    titleLine2: "TO THE WORLD",
+    paragraph1: "Baggy Street; Amsterdam'ın yağmurlu kanallarında doğan karanlık drill müziğinin sert basları ile İstanbul sokaklarının bitmeyen enerjisini bir araya getiren bağımsız bir tasarım atölyesidir.",
+    paragraph2: "Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM saf Fransız havlu pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.",
+    stats: [
+      { label: "460 GSM SAF HAVLU", icon: "HeavyStitch" },
+      { label: "14.5 OZ RAW DENİM", icon: "HeavyStitch" },
+      { label: "380 GSM FLANEL", icon: "HeavyStitch" },
+      { label: "300 GSM ASİT YIKAMA", icon: "HeavyStitch" },
+    ],
+    image: "/images/brand/brand-story-models.webp",
+  };
+
+  const cmsSettings = [
+    { key: "hero_slides", value: JSON.stringify(defaultHeroSlides) },
+    { key: "announcement_bar", value: JSON.stringify(defaultAnnouncementBar) },
+    { key: "editorial_looks", value: JSON.stringify(defaultEditorialLooks) },
+    { key: "brand_story", value: JSON.stringify(defaultBrandStory) },
+  ];
+
+  for (const s of cmsSettings) {
+    await prisma.siteSetting.upsert({
+      where: { key: s.key },
+      update: { value: s.value },
+      create: { key: s.key, value: s.value },
+    });
+  }
+  console.log(`✅ Seeded ${cmsSettings.length} site settings for CMS`);
+
   console.log('🚀 Database seeding finished successfully.');
 }
 
