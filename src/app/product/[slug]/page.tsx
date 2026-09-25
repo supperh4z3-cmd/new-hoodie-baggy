@@ -477,43 +477,6 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Sticky Mobile Add To Cart Bar */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 w-full max-w-full bg-[#0e0e14]/98 backdrop-blur-2xl border-t border-zinc-800/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.85)] box-border overflow-hidden">
-          <div className="flex items-center justify-between gap-3 w-full max-w-md mx-auto min-w-0">
-            {/* Price Column */}
-            <div className="flex flex-col shrink-0 min-w-0 pr-1">
-              <span className="text-[10px] font-mono tracking-wider text-zinc-400 uppercase font-semibold">
-                TOPLAM TUTAR
-              </span>
-              <span className="text-base sm:text-lg font-mono font-black text-white whitespace-nowrap">
-                {formatPrice(product.price * quantity)}
-              </span>
-            </div>
-
-            {/* Mobile Action Button */}
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="flex-1 min-w-0 h-12 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-mono font-black px-4 rounded-xl uppercase tracking-wider shadow-lg shadow-red-950/70 transition-all"
-            >
-              {addedEffect ? (
-                <span className="flex items-center gap-1.5 truncate">
-                  <CheckCircle className="w-4 h-4 shrink-0 text-white" />
-                  <span className="truncate">EKLENDİ!</span>
-                </span>
-              ) : (
-                <span className="flex items-center gap-2 truncate">
-                  <ShoppingBag className="w-4 h-4 shrink-0" />
-                  <span className="truncate">SEPETE EKLE</span>
-                  <span className="bg-black/30 border border-white/10 text-white/95 text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0">
-                    {selectedSize}
-                  </span>
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-
         {/* Related Drops */}
         <div className="mt-20">
           <RelatedProducts currentProductId={product.id} category={product.category} />
@@ -525,6 +488,86 @@ export default function ProductDetailPage() {
           onClose={() => setSizeGuideOpen(false)}
           category={product.category}
         />
+      </div>
+
+      {/* Sticky Mobile Add To Cart Bar - Placed at ROOT LEVEL for perfect viewport pinning */}
+      <div
+        id="mobile-sticky-buy-bar"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          boxSizing: "border-box",
+          overflow: "hidden",
+          zIndex: 9999,
+        }}
+        className="lg:hidden bg-[#0c0c12]/98 backdrop-blur-2xl border-t border-zinc-800 px-3.5 pt-2.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-[0_-10px_35px_rgba(0,0,0,0.9)]"
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "10px",
+            width: "100%",
+            maxWidth: "480px",
+            margin: "0 auto",
+            boxSizing: "border-box",
+          }}
+        >
+          {/* Price Column */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              flexShrink: 0,
+              minWidth: "75px",
+            }}
+          >
+            <span className="text-[9px] font-mono tracking-wider text-zinc-400 uppercase font-semibold">
+              TOPLAM
+            </span>
+            <span className="text-sm sm:text-base font-mono font-black text-white whitespace-nowrap">
+              {formatPrice(product.price * quantity)}
+            </span>
+          </div>
+
+          {/* Direct Flex Add-To-Cart Button */}
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+              flex: "1 1 0%",
+              minWidth: 0,
+              height: "46px",
+              paddingLeft: "12px",
+              paddingRight: "12px",
+              boxSizing: "border-box",
+            }}
+            className="bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white rounded-xl uppercase font-mono font-black text-xs tracking-wider shadow-lg shadow-red-950/80 transition-all cursor-pointer"
+          >
+            {addedEffect ? (
+              <>
+                <CheckCircle className="w-4 h-4 shrink-0 text-white" />
+                <span className="truncate">EKLENDİ!</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-4 h-4 shrink-0" />
+                <span className="truncate">SEPETE EKLE</span>
+                <span className="shrink-0 text-[10px] opacity-75 font-normal">
+                  ({selectedSize})
+                </span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
