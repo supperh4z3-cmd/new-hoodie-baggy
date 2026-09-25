@@ -1,0 +1,170 @@
+export interface HeroSlide {
+  id: string;
+  type: 'video' | 'image';
+  src: string;
+  poster?: string;
+  coordinates: string;
+  city: string;
+  badge: string;
+  headline?: string;
+  useLogo?: boolean;
+  tagline: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+export interface AnnouncementBarContent {
+  enabled: boolean;
+  text: string;
+  subtext: string;
+  linkText: string;
+  linkUrl: string;
+}
+
+export interface EditorialLook {
+  id: string;
+  frameNo: string;
+  title: string;
+  category: 'all' | 'hoodies' | 'bottoms' | 'night' | 'video';
+  subtitle: string;
+  location: string;
+  cameraInfo: string;
+  modelSpecs: string;
+  mediaType: 'image' | 'video';
+  mediaSrc: string;
+  aspect?: string;
+  tilt?: string;
+  offset?: string;
+  tags?: string[];
+  featuredProductSlug: string;
+  quote?: string;
+}
+
+export interface BrandStoryContent {
+  badge: string;
+  titleLine1: string;
+  titleLine2: string;
+  paragraph1: string;
+  paragraph2: string;
+  stats: Array<{ label: string; icon: string }>;
+  image: string;
+}
+
+export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
+  {
+    id: 'slide-1',
+    type: 'video',
+    src: '/videos/hero-night-city.webm',
+    poster: '/images/hero/hero-bg.webp',
+    coordinates: '41.0082° N, 28.9784° E',
+    city: 'İSTANBUL',
+    badge: 'SOKAK MODASI YENİDEN TANIMLANDI',
+    useLogo: true,
+    tagline: 'Aynı Şehir, Farklı Bakış Açısı',
+    ctaText: 'HEMEN KEŞFET',
+    ctaLink: '/shop',
+  },
+  {
+    id: 'slide-2',
+    type: 'video',
+    src: '/videos/hero-traffic-night.webm',
+    poster: '/images/hero/hero-bg.webp',
+    coordinates: '52.3676° N, 4.9041° E',
+    city: 'AMSTERDAM & İSTANBUL',
+    badge: '2026 DRILL KOLEKSİYONU',
+    headline: 'SOKAKLARDAN DÜNYAYA',
+    tagline: 'Sıradan Kıyafetlerin Ötesinde Bir Yaşam Tarzı',
+    ctaText: "YENİ DROP'U İNCELE",
+    ctaLink: '/shop?category=hoodies',
+  },
+  {
+    id: 'slide-3',
+    type: 'video',
+    src: '/videos/hero-skyline-night.webm',
+    poster: '/images/hero/hero-bg.webp',
+    coordinates: '460 GSM SAF FRANSIZ PAMUKLU',
+    city: 'SINIRLI SERİ',
+    badge: 'TAVİZSİZ TOK KALIPLAR',
+    headline: 'OVERSIZE & BAGGY KESİMLER',
+    tagline: 'Yıllar Boyu Formunu Kaybetmeyen Dik Duruş',
+    ctaText: 'EŞOFMAN & HOODIE',
+    ctaLink: '/shop?category=sweatpants',
+  },
+  {
+    id: 'slide-4',
+    type: 'video',
+    src: '/videos/hero-street-lights.webm',
+    poster: '/images/hero/hero-bg.webp',
+    coordinates: 'GECE SOKAKLARI // İSTANBUL',
+    city: 'KADIKÖY & BEYOĞLU',
+    badge: 'YENİ GÖMLEK & T-SHIRT DROPLARI',
+    headline: 'SOKAK IŞIKLARI ALTINDA',
+    tagline: 'Ağır Pamuklu Kumaşlar ve Tavizsiz Dökümler',
+    ctaText: 'YENİ DROPLARI KEŞFET',
+    ctaLink: '/shop',
+  },
+];
+
+export const DEFAULT_ANNOUNCEMENT_BAR: AnnouncementBarContent = {
+  enabled: true,
+  text: "2.000 TL ÜZERİ TÜM TÜRKİYE'YE ÜCRETSİZ KARGO",
+  subtext: 'YENİ DROP: ISTANBUL DRILL 2026',
+  linkText: 'ŞİMDİ KEŞFET →',
+  linkUrl: '/shop',
+};
+
+export const DEFAULT_EDITORIAL_LOOKS: EditorialLook[] = [
+  {
+    id: 'look-1',
+    frameNo: 'FRAME [01/07]',
+    title: 'UNDERGROUND TUNNEL DRILL',
+    category: 'hoodies',
+    subtitle: 'Ağır 460 GSM French Terry pamuklu ve çift katmanlı dik duran kapüşon silüeti.',
+    location: '41.0082° N, 28.9784° E / İSTANBUL',
+    cameraInfo: 'Leica M6 // Kodak Tri-X 400 B&W // 35mm f/1.4',
+    modelSpecs: 'Boy: 1.88 m • Kilo: 78 kg • Beden: L / Oversize',
+    mediaType: 'image',
+    mediaSrc: '/images/brand/drill-editorial-1.webp',
+    aspect: 'aspect-[3/4]',
+    tilt: '-rotate-2',
+    offset: 'lg:translate-y-0',
+    tags: ['460 GSM', 'PITCH BLACK', 'HEAVY HOODIE'],
+    featuredProductSlug: 'drill-logo-hoodie',
+    quote: 'Göz alıcı değil, tehditkar ve tavizsiz bir duruş.',
+  },
+  {
+    id: 'look-2',
+    frameNo: 'FRAME [02/07]',
+    title: 'NIGHT RUNNER OVERSIZED PUFFER',
+    category: 'bottoms',
+    subtitle: 'Su itici mat ripstop kumaş ve kaz tüyü dolgulu ultra hacimli silüet.',
+    location: '52.3676° N, 4.9041° E / AMSTERDAM',
+    cameraInfo: 'Contax T2 // Fujifilm Superia 800 // 38mm f/2.8',
+    modelSpecs: 'Boy: 1.82 m • Kilo: 74 kg • Beden: M / Relaxed',
+    mediaType: 'image',
+    mediaSrc: '/images/brand/brand-story-models.webp',
+    aspect: 'aspect-[3/4]',
+    tilt: 'rotate-1',
+    offset: 'lg:translate-y-12',
+    tags: ['WATER RESISTANT', 'MATTE BLACK', 'PUFFER JACKET'],
+    featuredProductSlug: 'baggy-sweatpants',
+    quote: 'Karanlık sokakların fırtınasında tavizsiz koruma.',
+  },
+];
+
+export const DEFAULT_BRAND_STORY: BrandStoryContent = {
+  badge: 'KURALLARI YIKAN SOKAK MODASI',
+  titleLine1: 'FROM ISTANBUL',
+  titleLine2: 'TO THE WORLD',
+  paragraph1:
+    "Baggy Street; Amsterdam'ın yağmurlu kanallarında doğan karanlık drill müziğinin sert basları ile İstanbul sokaklarının bitmeyen enerjisini bir araya getiren bağımsız bir tasarım atölyesidir.",
+  paragraph2:
+    'Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM saf Fransız havlu pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.',
+  stats: [
+    { label: '460 GSM SAF HAVLU', icon: 'HeavyStitch' },
+    { label: '14.5 OZ RAW DENİM', icon: 'HeavyStitch' },
+    { label: '380 GSM FLANEL', icon: 'HeavyStitch' },
+    { label: '300 GSM ASİT YIKAMA', icon: 'HeavyStitch' },
+  ],
+  image: '/images/brand/brand-story-models.webp',
+};
