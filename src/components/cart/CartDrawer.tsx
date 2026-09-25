@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { X, ShoppingBag, ArrowRight, ShieldCheck, Tag } from "lucide-react";
 import { useCartStore } from "@/lib/store/useCartStore";
@@ -24,6 +24,36 @@ export function CartDrawer() {
   const [couponInput, setCouponInput] = useState("");
   const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
+  // Prevent background scroll and horizontal gestures on mobile when drawer is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalOverscroll = document.body.style.overscrollBehavior;
+    const originalTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    document.body.style.touchAction = "pan-y";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeCart();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.overscrollBehavior = originalOverscroll;
+      document.body.style.touchAction = originalTouchAction;
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, closeCart]);
+
   if (!isOpen) return null;
 
   const handleApplyCoupon = (e: React.FormEvent) => {
@@ -39,7 +69,10 @@ export function CartDrawer() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div
+      className="fixed inset-0 z-[99999] flex justify-end overflow-hidden w-full max-w-full pointer-events-auto"
+      style={{ touchAction: "none" }}
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
@@ -48,19 +81,22 @@ export function CartDrawer() {
       />
 
       {/* Drawer Container */}
-      <div className="relative w-full max-w-md bg-zinc-950 text-white flex flex-col justify-between h-full border-l border-zinc-800 shadow-2xl z-10 animate-in slide-in-from-right duration-300">
+      <div
+        className="relative w-full max-w-full sm:max-w-md bg-zinc-950 text-white flex flex-col justify-between h-full border-l border-zinc-800 shadow-2xl z-10 animate-in slide-in-from-right duration-300 overflow-hidden box-border"
+        style={{ touchAction: "pan-y", overscrollBehavior: "contain" }}
+      >
         {/* Header */}
-        <div className="p-5 border-b border-zinc-850 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-white" />
-            <h2 className="text-sm font-mono font-bold tracking-widest uppercase">
+        <div className="p-4 sm:p-5 border-b border-zinc-850 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <ShoppingBag className="w-5 h-5 text-white shrink-0" />
+            <h2 className="text-sm font-mono font-bold tracking-widest uppercase truncate">
               SEPETİNİZ ({totalItemCount})
             </h2>
           </div>
           <button
             type="button"
             onClick={closeCart}
-            className="p-1.5 text-zinc-400 hover:text-white rounded-md hover:bg-zinc-900 transition-colors"
+            className="p-1.5 text-zinc-400 hover:text-white rounded-md hover:bg-zinc-900 transition-colors shrink-0"
             aria-label="Sepeti Kapat"
           >
             <X className="w-5 h-5" />
@@ -68,12 +104,12 @@ export function CartDrawer() {
         </div>
 
         {/* Free Shipping Tracker */}
-        <div className="px-5 pt-4">
+        <div className="px-4 sm:px-5 pt-3 sm:pt-4 shrink-0">
           <FreeShippingBar />
         </div>
 
         {/* Item List / Empty State */}
-        <div className="flex-1 overflow-y-auto px-5 divide-y divide-zinc-850/60">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 divide-y divide-zinc-850/60 overscroll-contain">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-16 space-y-4">
               <div className="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500">
@@ -103,22 +139,22 @@ export function CartDrawer() {
 
         {/* Footer Summary (if items exist) */}
         {items.length > 0 && (
-          <div className="p-5 border-t border-zinc-850 bg-zinc-950/95 space-y-4">
+          <div className="p-4 sm:p-5 border-t border-zinc-850 bg-zinc-950/95 space-y-3 sm:space-y-4 shrink-0 w-full min-w-0 overflow-hidden box-border">
             {/* Promo Code Input */}
-            <form onSubmit={handleApplyCoupon} className="flex gap-2">
-              <div className="relative flex-1">
-                <Tag className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+            <form onSubmit={handleApplyCoupon} className="flex gap-2 w-full min-w-0">
+              <div className="relative flex-1 min-w-0">
+                <Tag className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 shrink-0 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Kupon Kodu (Örn: BAGGY10)"
                   value={couponInput}
                   onChange={(e) => setCouponInput(e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 pl-9 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-600 font-mono uppercase"
+                  className="w-full min-w-0 bg-zinc-900 border border-zinc-800 rounded px-3 py-2 pl-9 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-600 font-mono uppercase box-border"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-zinc-800 hover:bg-zinc-700 text-white text-xs px-3 py-2 rounded font-mono font-semibold transition-colors"
+                className="bg-zinc-800 hover:bg-zinc-700 text-white text-xs px-3 sm:px-4 py-2 rounded font-mono font-semibold transition-colors shrink-0"
               >
                 UYGULA
               </button>
@@ -135,12 +171,12 @@ export function CartDrawer() {
             )}
 
             {appliedCoupon && (
-              <div className="flex items-center justify-between text-xs bg-emerald-950/40 border border-emerald-800/40 px-3 py-1.5 rounded text-emerald-400">
-                <span>Aktif Kupon: <strong>{appliedCoupon}</strong></span>
+              <div className="flex items-center justify-between text-xs bg-emerald-950/40 border border-emerald-800/40 px-3 py-1.5 rounded text-emerald-400 min-w-0">
+                <span className="truncate">Aktif Kupon: <strong>{appliedCoupon}</strong></span>
                 <button
                   type="button"
                   onClick={removeCoupon}
-                  className="text-zinc-400 hover:text-white underline text-[11px]"
+                  className="text-zinc-400 hover:text-white underline text-[11px] shrink-0 ml-2"
                 >
                   Kaldır
                 </button>
@@ -175,14 +211,14 @@ export function CartDrawer() {
             </div>
 
             {/* Primary Action Buttons */}
-            <div className="space-y-2">
+            <div className="space-y-2 w-full min-w-0">
               <Link
                 href="/checkout"
                 onClick={closeCart}
                 className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-3.5 rounded uppercase tracking-widest transition-colors shadow-lg shadow-red-950/50"
               >
                 <span>ÖDEMEYE GEÇ (CHECKOUT)</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
               <Link
                 href="/cart"
@@ -195,8 +231,8 @@ export function CartDrawer() {
 
             {/* Trust badge */}
             <div className="flex items-center justify-center gap-2 text-[11px] text-zinc-500 font-mono">
-              <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
-              <span>256-Bit SSL Güvenli Alışveriş & Hızlı Teslimat</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+              <span className="truncate">256-Bit SSL Güvenli Alışveriş & Hızlı Teslimat</span>
             </div>
           </div>
         )}

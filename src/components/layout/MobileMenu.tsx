@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { X, ArrowRight, MapPin, ShoppingBag, Heart, Sparkles } from "lucide-react";
@@ -20,10 +20,43 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const openCart = useCartStore((state) => state.openCart);
   const wishlistCount = useWishlistStore((state) => state.items.length);
 
+  // Prevent background scroll and horizontal gestures on mobile when menu is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalOverscroll = document.body.style.overscrollBehavior;
+    const originalTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    document.body.style.touchAction = "pan-y";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.overscrollBehavior = originalOverscroll;
+      document.body.style.touchAction = originalTouchAction;
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex lg:hidden">
+    <div
+      className="fixed inset-0 z-[99999] flex lg:hidden overflow-hidden w-full max-w-full pointer-events-auto"
+      style={{ touchAction: "none" }}
+    >
       {/* Backdrop with blur */}
       <div
         className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
@@ -32,7 +65,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       />
 
       {/* Drawer Container */}
-      <div className="relative w-full max-w-sm bg-[#09090b] text-white flex flex-col justify-between h-full border-r border-zinc-800 shadow-2xl z-10 animate-in slide-in-from-left duration-300 overflow-y-auto">
+      <div
+        className="relative w-full max-w-[85vw] sm:max-w-sm bg-[#09090b] text-white flex flex-col justify-between h-full border-r border-zinc-800 shadow-2xl z-10 animate-in slide-in-from-left duration-300 overflow-y-auto overscroll-contain box-border"
+        style={{ touchAction: "pan-y" }}
+      >
         {/* Top Header */}
         <div className="p-5 border-b border-zinc-850 flex items-center justify-between bg-black/40 sticky top-0 z-20 backdrop-blur-md">
           <Logo size="sm" />
