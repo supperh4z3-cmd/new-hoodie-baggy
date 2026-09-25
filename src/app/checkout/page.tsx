@@ -45,6 +45,39 @@ export default function CheckoutPage() {
     orderNotes: "Zil çalmayın lütfen, kapıya bırakabilirsiniz.",
   });
 
+  const [autoFilled, setAutoFilled] = useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (typeof window === "undefined") return;
+      try {
+        const saved = localStorage.getItem("baggy_user_address");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          const nameParts = (parsed.fullName || "").trim().split(" ");
+          const firstName = nameParts[0] || "";
+          const lastName = nameParts.slice(1).join(" ") || "";
+
+          setFormData((prev) => ({
+            ...prev,
+            firstName: firstName || prev.firstName,
+            lastName: lastName || prev.lastName,
+            email: parsed.email || prev.email,
+            phone: parsed.phone || prev.phone,
+            city: parsed.city || prev.city,
+            district: parsed.district || prev.district,
+            address: parsed.fullAddress || prev.address,
+          }));
+          setAutoFilled(true);
+        }
+      } catch (err) {
+        console.error("Address auto-fill error:", err);
+      }
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("credit-card");
   const [ibanCopied, setIbanCopied] = useState(false);
   const [notifyWhatsapp, setNotifyWhatsapp] = useState(true);
@@ -119,6 +152,20 @@ export default function CheckoutPage() {
       try {
         localStorage.setItem(`order_${generatedCode}`, JSON.stringify(orderData));
         localStorage.setItem("last_order_code", generatedCode);
+        const existing = localStorage.getItem("baggy_user_address");
+        if (!existing) {
+          localStorage.setItem(
+            "baggy_user_address",
+            JSON.stringify({
+              fullName: `${formData.firstName} ${formData.lastName}`.trim(),
+              phone: formData.phone,
+              email: formData.email,
+              city: formData.city,
+              district: formData.district,
+              fullAddress: formData.address,
+            })
+          );
+        }
       } catch {
         // Ignore
       }
@@ -187,13 +234,21 @@ export default function CheckoutPage() {
         <div className="lg:col-span-7 space-y-8">
           {/* Step 1: Delivery Address */}
           <div className="bg-zinc-950 border border-zinc-850 rounded-xl p-6 sm:p-7 space-y-5">
-            <div className="flex items-center gap-3 pb-4 border-b border-zinc-850">
-              <span className="w-6 h-6 rounded-full bg-red-600 text-white font-mono text-xs font-bold flex items-center justify-center">
-                1
-              </span>
-              <h2 className="text-sm font-bold tracking-widest uppercase text-white">
-                TESLİMAT VE FATURA BİLGİLERİ
-              </h2>
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-zinc-850">
+              <div className="flex items-center gap-3">
+                <span className="w-6 h-6 rounded-full bg-red-600 text-white font-mono text-xs font-bold flex items-center justify-center">
+                  1
+                </span>
+                <h2 className="text-sm font-bold tracking-widest uppercase text-white">
+                  TESLİMAT VE FATURA BİLGİLERİ
+                </h2>
+              </div>
+              {autoFilled && (
+                <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-1 rounded-md flex items-center gap-1.5 font-bold">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Kayıtlı Adresiniz Dolduruldu</span>
+                </span>
+              )}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

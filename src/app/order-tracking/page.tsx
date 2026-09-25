@@ -14,23 +14,27 @@ import {
   ArrowRight,
   ShieldCheck,
   MessageSquare,
+  FileText,
 } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { InvoiceModal } from "@/components/common/InvoiceModal";
 
 interface OrderData {
   code: string;
   date: string;
   items: Array<{
-    id: string;
-    product: {
-      id: string;
-      name: string;
-      price: number;
-      images: string[];
+    id?: string;
+    product?: {
+      id?: string;
+      name?: string;
+      price?: number;
+      images?: string[];
     };
-    size: string;
-    color: string;
-    quantity: number;
+    name?: string;
+    price?: number;
+    size?: string;
+    color?: string;
+    quantity?: number;
   }>;
   subtotal: number;
   discountAmount: number;
@@ -114,6 +118,7 @@ function OrderTrackingContent() {
 
   const [searchCode, setSearchCode] = useState(activeCode);
   const [order, setOrder] = useState<OrderData | null>(() => getOrderData(activeCode));
+  const [showInvoice, setShowInvoice] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,16 +215,27 @@ function OrderTrackingContent() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  Siparişiniz Onaylandı
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                onClick={() => setShowInvoice(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 hover:text-white transition-colors font-mono text-xs font-bold uppercase shadow-md"
+              >
+                <FileText className="w-4 h-4 text-red-500" />
+                <span>E-Arşiv Fatura</span>
+              </button>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+                  <ShieldCheck className="w-6 h-6" />
                 </div>
-                <div className="text-[11px] font-mono text-zinc-400">
-                  Hazırlık aşamasına geçildi
+                <div>
+                  <div className="text-xs font-bold text-white uppercase tracking-wider">
+                    Siparişiniz Onaylandı
+                  </div>
+                  <div className="text-[11px] font-mono text-zinc-400">
+                    Hazırlık aşamasına geçildi
+                  </div>
                 </div>
               </div>
             </div>
@@ -272,31 +288,38 @@ function OrderTrackingContent() {
               </h3>
 
               <div className="divide-y divide-zinc-900">
-                {order.items.map((item, idx) => (
-                  <div key={idx} className="py-4 first:pt-0 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-16 h-20 bg-zinc-900 rounded overflow-hidden shrink-0 border border-zinc-800">
-                        <Image
-                          src={item.product.images[0] || "/images/products/drill-logo-hoodie.webp"}
-                          alt={item.product.name}
-                          fill
-                          className="object-cover"
-                        />
+                {order.items.map((item, idx) => {
+                  const itemImg = item.product?.images?.[0] || item.product?.images?.[0] || "/images/products/drill-logo-hoodie.webp";
+                  const itemName = item.product?.name || item.name || "BAGGY STREET PARÇASI";
+                  const itemPrice = item.product?.price ?? item.price ?? 0;
+                  const itemQty = item.quantity || 1;
+
+                  return (
+                    <div key={idx} className="py-4 first:pt-0 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-16 h-20 bg-zinc-900 rounded overflow-hidden shrink-0 border border-zinc-800">
+                          <Image
+                            src={itemImg}
+                            alt={itemName}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-white uppercase tracking-wider">
+                            {itemName}
+                          </div>
+                          <div className="text-[11px] font-mono text-zinc-500 mt-1">
+                            Beden: {item.size || "L"} • Renk: {item.color || "Siyah"} • Adet: {itemQty}
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-white uppercase tracking-wider">
-                          {item.product.name}
-                        </div>
-                        <div className="text-[11px] font-mono text-zinc-500 mt-1">
-                          Beden: {item.size} • Renk: {item.color} • Adet: {item.quantity}
-                        </div>
+                      <div className="text-xs font-mono font-bold text-white">
+                        {formatPrice(itemPrice * itemQty)}
                       </div>
                     </div>
-                    <div className="text-xs font-mono font-bold text-white">
-                      {formatPrice(item.product.price * item.quantity)}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Totals Breakdown */}
@@ -402,6 +425,37 @@ function OrderTrackingContent() {
             Lütfen sipariş durumunu sorgulamak için geçerli bir sipariş kodu girin.
           </p>
         </div>
+      )}
+
+      {/* Official E-Arşiv Invoice Modal */}
+      {order && showInvoice && (
+        <InvoiceModal
+          isOpen={showInvoice}
+          onClose={() => setShowInvoice(false)}
+          invoice={{
+            orderCode: order.code,
+            date: order.date,
+            customerName: `${order.formData.firstName} ${order.formData.lastName}`,
+            phone: order.formData.phone,
+            email: order.formData.email,
+            address: order.formData.address,
+            city: order.formData.city,
+            district: order.formData.district,
+            paymentMethod: order.paymentMethod,
+            items: order.items.map((it) => ({
+              name: it.product?.name || it.name || "BAGGY STREET PARÇASI",
+              size: it.size || "L",
+              color: it.color || "Siyah",
+              quantity: it.quantity || 1,
+              price: it.product?.price ?? it.price ?? 0,
+            })),
+            subtotal: order.subtotal || order.finalTotal,
+            discountAmount: order.discountAmount,
+            shippingFee: order.shippingFee,
+            codFee: order.codFee,
+            finalTotal: order.finalTotal,
+          }}
+        />
       )}
     </div>
   );

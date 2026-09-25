@@ -14,18 +14,26 @@ import {
   ArrowLeft,
   Save,
   MessageCircle,
+  FileText,
 } from "lucide-react";
 import { useWishlistStore } from "@/lib/store/useWishlistStore";
 import { useToastStore } from "@/lib/store/useToastStore";
+import { InvoiceModal, InvoiceData } from "@/components/common/InvoiceModal";
 
 interface OrderItem {
-  id: string;
-  name: string;
-  price: number;
-  size: string;
-  color: string;
-  image: string;
-  quantity: number;
+  id?: string;
+  name?: string;
+  price?: number;
+  size?: string;
+  color?: string;
+  image?: string;
+  quantity?: number;
+  product?: {
+    id?: string;
+    name?: string;
+    price?: number;
+    images?: string[];
+  };
 }
 
 interface OrderData {
@@ -64,6 +72,7 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState<"orders" | "address" | "wishlist">("orders");
   const [orders, setOrders] = useState<OrderData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceData | null>(null);
   const [savedAddress, setSavedAddress] = useState<SavedAddress>({
     fullName: "",
     phone: "",
@@ -272,6 +281,37 @@ export default function AccountPage() {
                         <span>{order.status || "Sipariş Alındı"}</span>
                       </span>
 
+                      <button
+                        type="button"
+                        onClick={() => setSelectedInvoice({
+                          orderCode: order.code,
+                          date: order.date,
+                          customerName: `${order.formData.firstName} ${order.formData.lastName}`,
+                          phone: order.formData.phone,
+                          email: order.formData.email,
+                          address: order.formData.address,
+                          city: order.formData.city,
+                          district: order.formData.district,
+                          paymentMethod: order.paymentMethod,
+                          items: order.items.map((it: OrderItem) => ({
+                            name: it.product?.name || it.name || "BAGGY STREET ITEM",
+                            size: it.size || "L",
+                            color: it.color || "Siyah",
+                            quantity: it.quantity || 1,
+                            price: it.product?.price ?? it.price ?? 0,
+                          })),
+                          subtotal: order.subtotal || order.finalTotal,
+                          discountAmount: order.discountAmount,
+                          shippingFee: order.shippingFee,
+                          codFee: order.codFee,
+                          finalTotal: order.finalTotal,
+                        })}
+                        className="inline-flex items-center gap-1 text-zinc-300 hover:text-white bg-zinc-850 hover:bg-zinc-800 border border-zinc-700 px-3 py-1 rounded-lg transition-colors font-bold text-[11px]"
+                      >
+                        <FileText className="w-3.5 h-3.5 text-zinc-400" />
+                        <span>E-Fatura</span>
+                      </button>
+
                       <Link
                         href={`/order-tracking?code=${order.code}`}
                         className="inline-flex items-center gap-1 text-white hover:text-red-400 bg-zinc-850 hover:bg-zinc-800 border border-zinc-700 px-3 py-1 rounded-lg transition-colors font-bold"
@@ -284,37 +324,43 @@ export default function AccountPage() {
 
                   {/* Order Items List */}
                   <div className="p-5 divide-y divide-zinc-900">
-                    {order.items.map((item, idx) => (
-                      <div key={idx} className="py-3 flex items-center justify-between gap-4 first:pt-0 last:pb-0">
-                        <div className="flex items-center gap-3">
-                          <div className="relative w-14 h-16 rounded-lg overflow-hidden bg-zinc-900 shrink-0 border border-zinc-800">
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fill
-                              sizes="56px"
-                              className="object-cover"
-                            />
-                          </div>
-                          <div>
-                            <h4 className="text-xs font-bold font-mono uppercase text-white line-clamp-1">
-                              {item.name}
-                            </h4>
-                            <div className="text-[11px] font-mono text-zinc-400 flex items-center gap-2 mt-0.5">
-                              <span>Beden: {item.size}</span>
-                              <span>•</span>
-                              <span>Renk: {item.color}</span>
-                              <span>•</span>
-                              <span>Adet: {item.quantity}</span>
+                    {order.items.map((item: OrderItem, idx: number) => {
+                      const itemImg = item.product?.images?.[0] || item.image || "/images/products/drill-logo-hoodie.webp";
+                      const itName = item.product?.name || item.name || "BAGGY STREET PARÇASI";
+                      const itPrice = item.product?.price ?? item.price ?? 0;
+
+                      return (
+                        <div key={idx} className="py-3 flex items-center justify-between gap-4 first:pt-0 last:pb-0">
+                          <div className="flex items-center gap-3">
+                            <div className="relative w-14 h-16 rounded-lg overflow-hidden bg-zinc-900 shrink-0 border border-zinc-800">
+                              <Image
+                                src={itemImg}
+                                alt={itName}
+                                fill
+                                sizes="56px"
+                                className="object-cover"
+                              />
+                            </div>
+                            <div>
+                              <h4 className="text-xs font-bold font-mono uppercase text-white line-clamp-1">
+                                {itName}
+                              </h4>
+                              <div className="text-[11px] font-mono text-zinc-400 flex items-center gap-2 mt-0.5">
+                                <span>Beden: {item.size}</span>
+                                <span>•</span>
+                                <span>Renk: {item.color}</span>
+                                <span>•</span>
+                                <span>Adet: {item.quantity}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className="text-right font-mono text-xs font-bold text-white shrink-0">
-                          {item.price * item.quantity} ₺
+                          <div className="text-right font-mono text-xs font-bold text-white shrink-0">
+                            {itPrice * (item.quantity || 1)} ₺
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {/* Order Footer */}
@@ -451,6 +497,15 @@ export default function AccountPage() {
           </a>
         </div>
       </div>
+
+      {/* Official E-Arşiv Invoice Modal */}
+      {selectedInvoice && (
+        <InvoiceModal
+          isOpen={!!selectedInvoice}
+          onClose={() => setSelectedInvoice(null)}
+          invoice={selectedInvoice}
+        />
+      )}
     </div>
   );
 }
