@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { X, Save, Loader2, Sparkles, AlertCircle } from 'lucide-react';
 import { AdminProduct } from './StockEditorModal';
+import { MultiImageUploader } from './MultiImageUploader';
 
 interface ProductFormModalProps {
   product: AdminProduct | null;
@@ -29,13 +30,28 @@ export function ProductFormModal({
 }: ProductFormModalProps) {
   const isEditing = Boolean(product);
 
+  // Parse initial gallery images
+  const initialImages: string[] = (() => {
+    if (!product) return [];
+    if (product.gallery) {
+      try {
+        const parsed = JSON.parse(product.gallery);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch {
+        // fallback
+      }
+    }
+    return product.image ? [product.image] : [];
+  })();
+
   const [name, setName] = useState(product?.name || '');
   const [slug, setSlug] = useState(product?.slug || '');
   const [category, setCategory] = useState(product?.category || 'hoodies');
   const [price, setPrice] = useState(product?.price?.toString() || '2499');
   const [comparePrice, setComparePrice] = useState(product?.comparePrice?.toString() || '');
   const [badge, setBadge] = useState(product?.badge || 'NEW');
-  const [image, setImage] = useState(product?.image || '/images/products/drill-logo-hoodie.webp');
+  const [images, setImages] = useState<string[]>(initialImages);
+  const [coverImage, setCoverImage] = useState<string>(product?.image || initialImages[0] || '');
   const [description, setDescription] = useState(product?.description || '');
   const [fabric, setFabric] = useState(product?.details?.fabric || '%100 Ağır Pamuklu Kumaş');
   const [fit, setFit] = useState(product?.details?.fit || 'Boxy / Heavy Oversize');
@@ -62,6 +78,12 @@ export function ProductFormModal({
     setError(null);
 
     try {
+      if (images.length === 0) {
+        throw new Error('Lütfen ürün için en az bir görsel yükleyin veya ekleyin.');
+      }
+
+      const finalCover = coverImage && images.includes(coverImage) ? coverImage : images[0];
+
       const payload: Record<string, unknown> = {
         name,
         slug: slug.trim() || undefined,
@@ -69,7 +91,8 @@ export function ProductFormModal({
         price: parseFloat(price),
         comparePrice: comparePrice ? parseFloat(comparePrice) : null,
         badge: badge.trim() || null,
-        image,
+        image: finalCover,
+        gallery: images,
         description,
         fabric,
         fit,
@@ -240,17 +263,16 @@ export function ProductFormModal({
             </div>
           </div>
 
-          <div>
-            <label className="block text-zinc-400 uppercase text-[11px] mb-1">
-              Görsel Dosya Yolu / URL *
-            </label>
-            <input
-              type="text"
-              required
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="/images/products/drill-logo-hoodie.webp"
-              className="w-full bg-[#0a0a0e] border border-zinc-800 p-2.5 text-zinc-200 focus:outline-none focus:border-red-500"
+          <div className="pt-2 border-t border-zinc-800">
+            <MultiImageUploader
+              images={images}
+              coverImage={coverImage}
+              onChange={(newImages, newCover) => {
+                setImages(newImages);
+                setCoverImage(newCover);
+              }}
+              folder="products"
+              maxImages={8}
             />
           </div>
 

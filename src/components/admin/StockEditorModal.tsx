@@ -19,6 +19,7 @@ export interface AdminProduct {
   comparePrice?: number | null;
   badge?: string | null;
   image: string;
+  gallery?: string;
   description: string;
   inStock: boolean;
   details?: {

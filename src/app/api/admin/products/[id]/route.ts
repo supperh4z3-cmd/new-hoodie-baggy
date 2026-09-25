@@ -85,7 +85,9 @@ export async function PUT(
     }
     if (badge !== undefined) productUpdateData.badge = badge || null;
     if (image !== undefined) productUpdateData.image = image;
-    if (gallery !== undefined) productUpdateData.gallery = JSON.stringify(gallery);
+    if (gallery !== undefined) {
+      productUpdateData.gallery = typeof gallery === 'string' ? gallery : JSON.stringify(gallery);
+    }
     if (description !== undefined) productUpdateData.description = description;
     if (inStock !== undefined) productUpdateData.inStock = Boolean(inStock);
 
