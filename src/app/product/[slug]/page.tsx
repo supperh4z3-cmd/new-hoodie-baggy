@@ -77,7 +77,7 @@ export default function ProductDetailPage() {
       {/* Subtle Ambient Top Glow for airy depth */}
       <div className="absolute top-20 left-1/3 w-[500px] h-[300px] bg-red-950/15 blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-24 lg:pb-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-32 lg:pb-16 relative z-10">
         {/* Clean Breadcrumb Navigation */}
         <nav className="text-xs font-mono text-zinc-400 mb-8 flex items-center gap-2 flex-wrap">
           <Link href="/" className="hover:text-white transition-colors">
@@ -113,7 +113,7 @@ export default function ProductDetailPage() {
 
           {/* Right Column: Clean, Decluttered, High-Contrast Luxury Buy Box (5 cols) */}
           <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-            <div className="bg-[#121218] border border-zinc-800/90 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <div className="bg-[#121218] border border-zinc-800/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl space-y-6">
               {/* 1. Header: Category Badge & Product Title */}
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
@@ -161,31 +161,55 @@ export default function ProductDetailPage() {
               </p>
 
               {/* 3. Color Selector */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2.5 pt-1">
                 <div className="flex justify-between items-center text-xs font-mono">
                   <span className="text-zinc-400 uppercase tracking-wider">Renk Seçimi:</span>
-                  <span className="text-white font-bold">{selectedColor}</span>
+                  <span className="text-white font-bold bg-zinc-900 border border-zinc-800 px-2.5 py-0.5 rounded-md">
+                    {selectedColor}
+                  </span>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color}
-                      type="button"
-                      onClick={() => setSelectedColor(color)}
-                      className={`px-4 py-2 rounded-xl text-xs font-mono transition-all duration-200 ${
-                        selectedColor === color
-                          ? "bg-white text-black font-black shadow-lg scale-[1.02]"
-                          : "bg-zinc-900 border border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-white"
-                      }`}
-                    >
-                      {color}
-                    </button>
-                  ))}
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+                  {product.colors.map((color) => {
+                    const isSelected = selectedColor === color;
+                    const lower = color.toLowerCase();
+                    const swatchBg =
+                      lower.includes("siyah") || lower.includes("black")
+                        ? "bg-black border-zinc-700"
+                        : lower.includes("antrasit") || lower.includes("kömür")
+                        ? "bg-zinc-800 border-zinc-600"
+                        : lower.includes("gri") || lower.includes("grey")
+                        ? "bg-zinc-500 border-zinc-400"
+                        : lower.includes("beyaz") || lower.includes("white")
+                        ? "bg-zinc-100 border-zinc-300"
+                        : lower.includes("kırmızı") || lower.includes("red")
+                        ? "bg-red-800 border-red-600"
+                        : lower.includes("indigo") || lower.includes("denim")
+                        ? "bg-blue-950 border-blue-800"
+                        : lower.includes("olive") || lower.includes("haki")
+                        ? "bg-emerald-950 border-emerald-800"
+                        : "bg-zinc-700 border-zinc-600";
+
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => setSelectedColor(color)}
+                        className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-mono transition-all duration-200 text-left min-w-0 ${
+                          isSelected
+                            ? "bg-white text-black font-black shadow-lg ring-2 ring-white/80"
+                            : "bg-zinc-900/90 border border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-white"
+                        }`}
+                      >
+                        <span className={`w-3 h-3 rounded-full border shrink-0 ${swatchBg}`} />
+                        <span className="truncate">{color}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* 4. Size Selector */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2.5 pt-1">
                 <div className="flex justify-between items-center text-xs font-mono">
                   <span className="text-zinc-400 uppercase tracking-wider">Beden:</span>
                   <button
@@ -218,13 +242,82 @@ export default function ProductDetailPage() {
 
               {/* 5. Primary Action: Add To Cart & Wishlist */}
               <div className="space-y-3 pt-3">
-                <div className="flex items-center gap-3">
+                {/* Mobile Screen (< sm): Two Clean, Full-Width Ergonomic Rows */}
+                <div className="sm:hidden space-y-2.5">
+                  <div className="flex items-center gap-2">
+                    {/* Mobile Quantity Spinner */}
+                    <div className="flex items-center justify-between border border-zinc-800 rounded-xl bg-zinc-900 h-12 px-3 w-32 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="p-1.5 text-zinc-400 hover:text-white transition-colors text-base font-bold"
+                        aria-label="Azalt"
+                      >
+                        -
+                      </button>
+                      <span className="text-xs font-mono font-black text-white">
+                        {quantity} ADET
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="p-1.5 text-zinc-400 hover:text-white transition-colors text-base font-bold"
+                        aria-label="Artır"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {/* Mobile Wishlist Button */}
+                    <button
+                      type="button"
+                      onClick={handleToggleWishlist}
+                      className={`flex-1 h-12 flex items-center justify-center gap-2 rounded-xl border text-xs font-mono font-bold transition-all ${
+                        isInWishlist
+                          ? "bg-red-950/80 border-red-600 text-red-400"
+                          : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white"
+                      }`}
+                    >
+                      <Heart
+                        className={`w-4 h-4 ${isInWishlist ? "fill-red-500 text-red-500" : ""}`}
+                      />
+                      <span>{isInWishlist ? "FAVORİLERDE" : "FAVORİYE EKLE"}</span>
+                    </button>
+                  </div>
+
+                  {/* Mobile High-Impact Add To Cart Button */}
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="w-full flex items-center justify-between px-5 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white h-14 rounded-xl transition-all duration-200 shadow-xl shadow-red-950/70"
+                  >
+                    {addedEffect ? (
+                      <div className="w-full flex items-center justify-center gap-2 font-mono font-black text-xs tracking-wider">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                        <span>SEPETE EKLENDİ!</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2.5 font-mono font-black text-xs tracking-widest uppercase">
+                          <ShoppingBag className="w-4 h-4 shrink-0" />
+                          <span>SEPETE EKLE</span>
+                        </div>
+                        <span className="font-mono font-black text-xs text-white/90 bg-black/25 px-2.5 py-1 rounded-md">
+                          {formatPrice(product.price * quantity)}
+                        </span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Tablet / Desktop Screen (>= sm): Horizontal Row */}
+                <div className="hidden sm:flex items-center gap-3">
                   {/* Quantity Spinner */}
-                  <div className="flex items-center border border-zinc-800 rounded-xl bg-zinc-900 h-13 px-3">
+                  <div className="flex items-center border border-zinc-800 rounded-xl bg-zinc-900 h-13 px-3 shrink-0">
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-1.5 text-zinc-400 hover:text-white transition-colors"
+                      className="p-1.5 text-zinc-400 hover:text-white transition-colors text-sm font-bold"
                       aria-label="Azalt"
                     >
                       -
@@ -235,7 +328,7 @@ export default function ProductDetailPage() {
                     <button
                       type="button"
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-1.5 text-zinc-400 hover:text-white transition-colors"
+                      className="p-1.5 text-zinc-400 hover:text-white transition-colors text-sm font-bold"
                       aria-label="Artır"
                     >
                       +
@@ -265,7 +358,7 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={handleToggleWishlist}
-                    className={`w-13 h-13 flex items-center justify-center rounded-xl border transition-all duration-200 ${
+                    className={`w-13 h-13 shrink-0 flex items-center justify-center rounded-xl border transition-all duration-200 ${
                       isInWishlist
                         ? "bg-red-600 border-red-500 text-white shadow-lg shadow-red-950/50"
                         : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700"
@@ -385,22 +478,48 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Sticky Mobile Add To Cart Bar */}
-        <div className="lg:hidden fixed bottom-0 inset-x-0 bg-[#121218]/95 backdrop-blur-xl border-t border-zinc-800 p-3 z-40 flex items-center justify-between gap-3 shadow-2xl">
-          <div className="flex flex-col">
-            <span className="text-[11px] font-mono text-zinc-400">Toplam Tutar</span>
-            <span className="text-base font-mono font-black text-white">
-              {formatPrice(product.price * quantity)}
-            </span>
-          </div>
+        <div className="lg:hidden fixed bottom-0 inset-x-0 bg-[#0e0e14]/95 backdrop-blur-2xl border-t border-zinc-800/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+          <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+            {/* Price Column */}
+            <div className="flex flex-col shrink-0 min-w-0 pr-1">
+              <span className="text-[10px] font-mono tracking-wider text-zinc-400 uppercase font-semibold">
+                TOPLAM TUTAR
+              </span>
+              <span className="text-base sm:text-lg font-mono font-black text-white whitespace-nowrap">
+                {formatPrice(product.price * quantity)}
+              </span>
+            </div>
 
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-mono font-black py-3 px-4 rounded-xl uppercase tracking-wider shadow-lg"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>SEPETE EKLE ({selectedSize})</span>
-          </button>
+            {/* Mobile Action Buttons */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="flex-1 min-w-0 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white text-xs font-mono font-black h-12 px-3 sm:px-4 rounded-xl uppercase tracking-wider shadow-lg shadow-red-950/70 transition-all"
+              >
+                <ShoppingBag className="w-4 h-4 shrink-0" />
+                <span className="truncate">SEPETE EKLE</span>
+                <span className="bg-black/35 border border-white/10 text-white/95 text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0">
+                  {selectedSize}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleToggleWishlist}
+                className={`w-12 h-12 shrink-0 flex items-center justify-center rounded-xl border transition-all ${
+                  isInWishlist
+                    ? "bg-red-950 border-red-600 text-red-400"
+                    : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
+                }`}
+                aria-label="Favorilere Ekle"
+              >
+                <Heart
+                  className={`w-4 h-4 ${isInWishlist ? "fill-red-500 text-red-500" : ""}`}
+                />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Related Drops */}
