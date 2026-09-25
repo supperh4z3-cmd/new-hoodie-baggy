@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { ToastContainer } from "@/components/ui/ToastContainer";
+import { WelcomeDiscountModal } from "@/components/common/WelcomeDiscountModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
         <Footer />
         <CartDrawer />
         <ToastContainer />
+        <WelcomeDiscountModal />
       </body>
     </html>
   );

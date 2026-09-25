@@ -114,9 +114,9 @@ export function Navbar() {
 
               {/* Account Link */}
               <Link
-                href="/shop"
+                href="/account"
                 className="p-2 text-zinc-300 hover:text-white transition-colors hidden sm:inline-flex"
-                aria-label="Hesap"
+                aria-label="Hesabım ve Siparişlerim"
               >
                 <User className="w-5 h-5" />
               </Link>

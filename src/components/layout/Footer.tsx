@@ -25,59 +25,108 @@ export function Footer() {
   return (
     <footer className="bg-black text-zinc-400 border-t border-zinc-850 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-zinc-900">
-          {/* Col 1: Logo & Manifesto (4 cols) */}
-          <div className="lg:col-span-4 space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-zinc-900">
+          {/* Col 1: Logo & Manifesto (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
             <Logo size="lg" />
-            <p className="text-xs text-zinc-500 leading-relaxed max-w-sm">
-              Amsterdam&apos;ın özgür ruhundan ve İstanbul sokaklarının dinamik drill kültüründen ilham alan premium streetwear markası. Ağır kumaşlar, tavizsiz oversize kalıplar.
+            <p className="text-xs text-zinc-500 leading-relaxed">
+              Amsterdam&apos;ın özgür ruhundan ve İstanbul sokaklarının dinamik drill kültüründen ilham alan premium streetwear markası. Ağır gramajlı kumaşlar, tavizsiz oversize kalıplar.
             </p>
             <div className="text-[11px] font-mono tracking-widest text-zinc-500">
-              41.0082° N, 28.9784° E ISTANBUL / TURKEY
+              41.0082° N, 28.9784° E ISTANBUL
             </div>
           </div>
 
-          {/* Col 2: Navigation Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
+          {/* Col 2: Navigation Links (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-mono font-bold tracking-widest text-white uppercase">
-              MENÜ
+              KOLEKSİYON
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs">
               <li>
                 <Link href="/shop" className="hover:text-white transition-colors">
-                  SHOP (TÜM ÜRÜNLER)
+                  Tüm Ürünler
                 </Link>
               </li>
               <li>
                 <Link href="/editorial" className="hover:text-white transition-colors text-red-400 font-semibold">
-                  LOOKBOOK (EDİTORYAL)
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  OUR STORY (HAKKIMIZDA)
+                  Lookbook 35mm
                 </Link>
               </li>
               <li>
                 <Link href="/shop?category=hoodies" className="hover:text-white transition-colors">
-                  KAPÜŞONLU & HOODIE
+                  Kapüşonlu & Hoodie
                 </Link>
               </li>
               <li>
                 <Link href="/shop?category=sweatpants" className="hover:text-white transition-colors">
-                  BAGGY EŞOFMAN
+                  Baggy Eşofman
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop?category=jackets" className="hover:text-white transition-colors">
+                  Mont & Ceket
                 </Link>
               </li>
               <li>
                 <Link href="/shop?category=jeans" className="hover:text-white transition-colors">
-                  DENIM & JEANS
+                  Denim & Jeans
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  Hikayemiz
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Newsletter & Socials (5 cols) */}
-          <div className="lg:col-span-5 space-y-5">
+          {/* Col 3: Customer Care & Legal (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-mono font-bold tracking-widest text-white uppercase">
+              MÜŞTERİ &amp; KVKK
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link href="/kvkk" className="text-red-400 hover:text-white transition-colors font-medium">
+                  KVKK Aydınlatma Metni
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Gizlilik ve Çerez Politikası
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Mesafeli Satış Sözleşmesi
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-white transition-colors">
+                  Sıkça Sorulan Sorular (SSS)
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-white transition-colors">
+                  14 Gün İade &amp; 460 GSM Bakım
+                </Link>
+              </li>
+              <li>
+                <Link href="/order-tracking" className="hover:text-white transition-colors">
+                  Sipariş Takibi
+                </Link>
+              </li>
+              <li>
+                <Link href="/account" className="hover:text-white transition-colors">
+                  Hesabım &amp; Siparişlerim
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Newsletter & Socials (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs font-mono font-bold tracking-widest text-white uppercase">
               JOIN OUR NEWSLETTER
             </h4>
@@ -113,7 +162,7 @@ export function Footer() {
             )}
 
             {/* Social Icons */}
-            <div className="pt-2 flex items-center space-x-5 text-zinc-400">
+            <div className="pt-2 flex items-center space-x-3 text-zinc-400">
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -151,16 +200,22 @@ export function Footer() {
             © {new Date().getFullYear()} Baggy Street. All rights reserved. Designed for Istanbul Streets.
           </div>
 
-          <div className="flex items-center space-x-6">
-            <Link href="/about" className="hover:text-zinc-400 transition-colors">
-              Privacy Policy
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-[10px]">
+            <Link href="/kvkk" className="text-zinc-500 hover:text-white transition-colors">
+              KVKK
             </Link>
-            <Link href="/about" className="hover:text-zinc-400 transition-colors">
-              Terms & Conditions
+            <Link href="/privacy" className="text-zinc-500 hover:text-white transition-colors">
+              GİZLİLİK
+            </Link>
+            <Link href="/terms" className="text-zinc-500 hover:text-white transition-colors">
+              ŞARTLAR
+            </Link>
+            <Link href="/faq" className="text-zinc-500 hover:text-white transition-colors">
+              SSS
             </Link>
             <button
               onClick={scrollToTop}
-              className="p-2 border border-zinc-800 rounded-full hover:border-zinc-600 hover:text-white transition-colors ml-4"
+              className="p-2 border border-zinc-800 rounded-full hover:border-zinc-600 hover:text-white transition-colors ml-2"
               aria-label="Sayfanın Başına Çık"
             >
               <ArrowUp className="w-3.5 h-3.5" />

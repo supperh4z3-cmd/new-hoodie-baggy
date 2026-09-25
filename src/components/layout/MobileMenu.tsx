@@ -172,6 +172,38 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               <span>HİKAYEMİZ & MANİFESTO</span>
               <ArrowRight className="w-4 h-4 text-zinc-500" />
             </Link>
+
+            {/* Quick Access Utility Links */}
+            <div className="pt-2 grid grid-cols-2 gap-2 font-mono text-xs">
+              <Link
+                href="/account"
+                onClick={onClose}
+                className="p-2.5 bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 rounded-lg text-center uppercase font-bold text-zinc-300 hover:text-white transition-colors"
+              >
+                HESABIM
+              </Link>
+              <Link
+                href="/order-tracking"
+                onClick={onClose}
+                className="p-2.5 bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 rounded-lg text-center uppercase font-bold text-zinc-300 hover:text-white transition-colors"
+              >
+                SİPARİŞ TAKİP
+              </Link>
+              <Link
+                href="/faq"
+                onClick={onClose}
+                className="p-2.5 bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 rounded-lg text-center uppercase font-bold text-zinc-300 hover:text-white transition-colors"
+              >
+                SSS & İADE
+              </Link>
+              <Link
+                href="/kvkk"
+                onClick={onClose}
+                className="p-2.5 bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 rounded-lg text-center uppercase font-bold text-red-400 hover:text-white transition-colors"
+              >
+                KVKK BİLGİ
+              </Link>
+            </div>
           </nav>
 
           {/* Visual Category Grid */}
