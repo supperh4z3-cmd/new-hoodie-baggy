@@ -130,53 +130,82 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    // Generate unique order number
-    const generatedCode = `BS-${Math.floor(100000 + Math.random() * 900000)}`;
+    try {
+      const payload = {
+        customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+        customerEmail: formData.email.trim(),
+        customerPhone: formData.phone.trim(),
+        shippingCity: formData.city.trim(),
+        shippingAddress: `${formData.district ? formData.district + ', ' : ''}${formData.address.trim()}`,
+        items: items.map((it) => ({
+          name: it.product.name,
+          size: it.size,
+          quantity: it.quantity,
+          price: it.product.price,
+          productId: it.product.id,
+        })),
+        totalAmount: finalTotal,
+        couponCode: appliedCoupon || undefined,
+        notes: formData.orderNotes || undefined,
+      };
 
-    // Store in localStorage for the order tracking simulation
-    const orderData = {
-      code: generatedCode,
-      date: new Date().toISOString(),
-      items,
-      subtotal,
-      discountAmount,
-      shippingFee: baseShippingFee,
-      codFee,
-      finalTotal,
-      formData,
-      paymentMethod,
-      status: "Sipariş Alındı",
-    };
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    if (typeof window !== "undefined") {
-      try {
-        localStorage.setItem(`order_${generatedCode}`, JSON.stringify(orderData));
-        localStorage.setItem("last_order_code", generatedCode);
-        const existing = localStorage.getItem("baggy_user_address");
-        if (!existing) {
-          localStorage.setItem(
-            "baggy_user_address",
-            JSON.stringify({
-              fullName: `${formData.firstName} ${formData.lastName}`.trim(),
-              phone: formData.phone,
-              email: formData.email,
-              city: formData.city,
-              district: formData.district,
-              fullAddress: formData.address,
-            })
-          );
+      const data = await res.json();
+      const generatedCode =
+        res.ok && data.orderNumber
+          ? data.orderNumber
+          : `BGY-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      // Store in localStorage for client-side state sync
+      const orderData = {
+        code: generatedCode,
+        date: new Date().toISOString(),
+        items,
+        subtotal,
+        discountAmount,
+        shippingFee: baseShippingFee,
+        codFee,
+        finalTotal,
+        formData,
+        paymentMethod,
+        status: 'Sipariş Alındı',
+      };
+
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(`order_${generatedCode}`, JSON.stringify(orderData));
+          localStorage.setItem('last_order_code', generatedCode);
+          const existing = localStorage.getItem('baggy_user_address');
+          if (!existing) {
+            localStorage.setItem(
+              'baggy_user_address',
+              JSON.stringify({
+                fullName: `${formData.firstName} ${formData.lastName}`.trim(),
+                phone: formData.phone,
+                email: formData.email,
+                city: formData.city,
+                district: formData.district,
+                fullAddress: formData.address,
+              })
+            );
+          }
+        } catch {
+          // Ignore
         }
-      } catch {
-        // Ignore
       }
-    }
 
-    // Simulate 1.5s bank/server processing
-    setTimeout(() => {
-      setIsProcessing(false);
       clearCart();
       router.push(`/order-tracking?code=${generatedCode}`);
-    }, 1500);
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('Sipariş iletilirken bir hata oluştu. Lütfen tekrar deneyiniz.');
+      setIsProcessing(false);
+    }
   };
 
   if (items.length === 0) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -118,7 +118,94 @@ function OrderTrackingContent() {
 
   const [searchCode, setSearchCode] = useState(activeCode);
   const [order, setOrder] = useState<OrderData | null>(() => getOrderData(activeCode));
+  const [dbOrder, setDbOrder] = useState<{
+    id: string;
+    orderNumber: string;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    shippingCity: string;
+    shippingAddress: string;
+    totalAmount: number;
+    status: string;
+    trackingCarrier?: string | null;
+    trackingNumber?: string | null;
+    createdAt: string;
+    items: Array<{
+      id: string;
+      name: string;
+      size: string;
+      price: number;
+      quantity: number;
+      productId?: string | null;
+    }>;
+  } | null>(null);
   const [showInvoice, setShowInvoice] = useState(false);
+
+  useEffect(() => {
+    if (!activeCode) return;
+    let isMounted = true;
+
+    async function fetchDbOrder() {
+      try {
+        const res = await fetch(`/api/orders/${activeCode}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted && json.order) {
+            setDbOrder(json.order);
+            const formatted: OrderData = {
+              code: json.order.orderNumber,
+              date: new Date(json.order.createdAt).toLocaleDateString("tr-TR"),
+              items: json.order.items.map((it: { id: string; name: string; size: string; price: number; quantity: number; productId?: string | null }) => ({
+                id: it.id,
+                product: {
+                  id: it.productId || it.id,
+                  name: it.name,
+                  price: it.price,
+                  images: ["/images/products/drill-logo-hoodie.webp"],
+                },
+                size: it.size,
+                color: "Default",
+                quantity: it.quantity,
+              })),
+              subtotal: json.order.totalAmount,
+              discountAmount: 0,
+              shippingFee: 0,
+              codFee: 0,
+              finalTotal: json.order.totalAmount,
+              formData: {
+                firstName: json.order.customerName.split(" ")[0] || json.order.customerName,
+                lastName: json.order.customerName.split(" ").slice(1).join(" ") || "",
+                email: json.order.customerEmail,
+                phone: json.order.customerPhone,
+                city: json.order.shippingCity,
+                district: "Merkez",
+                address: json.order.shippingAddress,
+              },
+              paymentMethod: "credit-card",
+              status:
+                json.order.status === "DELIVERED"
+                  ? "Teslim Edildi"
+                  : json.order.status === "SHIPPED"
+                  ? "Kargoya Verildi"
+                  : json.order.status === "PROCESSING"
+                  ? "Hazırlanıyor"
+                  : "Sipariş Alındı",
+            };
+            setOrder(formatted);
+          }
+        }
+      } catch {
+        // Fallback to local storage if API call fails
+      }
+    }
+
+    fetchDbOrder();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeCode]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,29 +216,42 @@ function OrderTrackingContent() {
     }
   };
 
+  const isStep1Done = true;
+  const isStep2Done = dbOrder
+    ? ["PROCESSING", "SHIPPED", "DELIVERED"].includes(dbOrder.status)
+    : true;
+  const isStep3Done = dbOrder
+    ? ["SHIPPED", "DELIVERED"].includes(dbOrder.status)
+    : false;
+  const isStep4Done = dbOrder ? dbOrder.status === "DELIVERED" : false;
+
+  const carrierName = dbOrder?.trackingCarrier || "Yurtiçi Kargo";
+
   const steps = [
     {
       label: "Sipariş Alındı",
       desc: "Ödeme onaylandı & sipariş sisteme düştü",
-      isComplete: true,
+      isComplete: isStep1Done,
       icon: CheckCircle2,
     },
     {
       label: "Hazırlanıyor",
       desc: "Ürünler paketleniyor ve kalite kontrolü yapılıyor",
-      isComplete: true,
+      isComplete: isStep2Done,
       icon: Package,
     },
     {
       label: "Kargoya Verildi",
-      desc: "Yurtiçi Kargo Takip No: YK-849102834",
-      isComplete: false,
+      desc: dbOrder?.trackingNumber
+        ? `${carrierName} Takip No: ${dbOrder.trackingNumber}`
+        : "Kargo takip numarası atanması bekleniyor",
+      isComplete: isStep3Done,
       icon: Truck,
     },
     {
       label: "Teslim Edildi",
-      desc: "Alıcıya teslim edilecek",
-      isComplete: false,
+      desc: isStep4Done ? "Alıcıya başarıyla teslim edildi" : "Alıcı adresine sevk edilecek",
+      isComplete: isStep4Done,
       icon: MapPin,
     },
   ];
