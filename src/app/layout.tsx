@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { CartDrawer } from "@/components/cart/CartDrawer";
+import { StorefrontShell } from "@/components/layout/StorefrontShell";
 import { ToastContainer } from "@/components/ui/ToastContainer";
-import { WelcomeDiscountModal } from "@/components/common/WelcomeDiscountModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,13 +31,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#080808] text-[#FAFAFA]">
-        <AnnouncementBar />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <CartDrawer />
+        <StorefrontShell>{children}</StorefrontShell>
         <ToastContainer />
-        <WelcomeDiscountModal />
       </body>
     </html>
   );
