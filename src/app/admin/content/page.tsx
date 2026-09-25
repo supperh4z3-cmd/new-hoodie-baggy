@@ -208,6 +208,10 @@ export default function AdminContentPage() {
       mediaSrc: '/images/brand/drill-editorial-1.webp',
       featuredProductSlug: 'drill-logo-hoodie',
       quote: 'Karanlık sokakların fırtınasında tavizsiz duruş.',
+      tags: ['DRILL', '460 GSM'],
+      aspect: 'aspect-[3/4]',
+      tilt: '',
+      offset: '',
     };
     setEditorialLooks([...editorialLooks, newLook]);
   };
@@ -834,6 +838,48 @@ export default function AdminContentPage() {
                     </div>
                   </div>
 
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Kategori Filtresi
+                      </label>
+                      <select
+                        value={look.category || 'all'}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].category = e.target.value as EditorialLook['category'];
+                          setEditorialLooks(updated);
+                        }}
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px] rounded"
+                      >
+                        <option value="all">Tüm Kombinler (all)</option>
+                        <option value="hoodies">Hoodie & Üst Giyim (hoodies)</option>
+                        <option value="bottoms">Eşofman & Denim (bottoms)</option>
+                        <option value="night">Gece Çekimleri (night)</option>
+                        <option value="video">Canlı Video / Reel (video)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Görsel Oranı (Aspect)
+                      </label>
+                      <select
+                        value={look.aspect || 'aspect-[3/4]'}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].aspect = e.target.value;
+                          setEditorialLooks(updated);
+                        }}
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px] rounded"
+                      >
+                        <option value="aspect-[3/4]">Dikey Portre (3/4)</option>
+                        <option value="aspect-[4/5]">Standart Moda (4/5)</option>
+                        <option value="aspect-square">Kare (1/1)</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-zinc-400 uppercase text-[11px] mb-1">
                       Başlık
@@ -900,21 +946,79 @@ export default function AdminContentPage() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-zinc-400 uppercase text-[10px] mb-1">
-                      Öne Çıkan Ürün Slug (Link)
-                    </label>
-                    <input
-                      type="text"
-                      value={look.featuredProductSlug}
-                      onChange={(e) => {
-                        const updated = [...editorialLooks];
-                        updated[idx].featuredProductSlug = e.target.value;
-                        setEditorialLooks(updated);
-                      }}
-                      placeholder="drill-logo-hoodie"
-                      className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px]"
-                    />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Model Ölçüleri
+                      </label>
+                      <input
+                        type="text"
+                        value={look.modelSpecs || ''}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].modelSpecs = e.target.value;
+                          setEditorialLooks(updated);
+                        }}
+                        placeholder="Boy: 1.85 m • Beden: L"
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Slogan / Alıntı
+                      </label>
+                      <input
+                        type="text"
+                        value={look.quote || ''}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].quote = e.target.value;
+                          setEditorialLooks(updated);
+                        }}
+                        placeholder="Karanlık sokakların tavizsiz duruşu."
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Etiketler (Virgülle ayırın)
+                      </label>
+                      <input
+                        type="text"
+                        value={(look.tags || []).join(', ')}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].tags = e.target.value
+                            .split(',')
+                            .map((t) => t.trim())
+                            .filter(Boolean);
+                          setEditorialLooks(updated);
+                        }}
+                        placeholder="DRILL, 460 GSM, HEAVY"
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-zinc-400 uppercase text-[10px] mb-1">
+                        Öne Çıkan Ürün Slug (Link)
+                      </label>
+                      <input
+                        type="text"
+                        value={look.featuredProductSlug}
+                        onChange={(e) => {
+                          const updated = [...editorialLooks];
+                          updated[idx].featuredProductSlug = e.target.value;
+                          setEditorialLooks(updated);
+                        }}
+                        placeholder="drill-logo-hoodie"
+                        className="w-full bg-[#0a0a0e] border border-zinc-800 p-1.5 text-zinc-300 text-[11px]"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

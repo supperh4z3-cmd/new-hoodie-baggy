@@ -351,13 +351,13 @@ export default function EditorialPage() {
               <div
                 key={look.id}
                 className={`relative flex flex-col justify-between group transition-all duration-500 ${
-                  layoutMode === "asymmetric" ? look.offset : ""
+                  layoutMode === "asymmetric" ? (look.offset || "") : ""
                 }`}
               >
                 {/* Polaroid Çerçevesi */}
                 <div
-                  className={`relative ${look.aspect} w-full rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl transition-all duration-500 group-hover:scale-[1.02] ${
-                    layoutMode === "asymmetric" ? look.tilt : ""
+                  className={`relative ${look.aspect || "aspect-[3/4]"} w-full rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl transition-all duration-500 group-hover:scale-[1.02] ${
+                    layoutMode === "asymmetric" ? (look.tilt || "") : ""
                   } group-hover:rotate-0 group-hover:border-zinc-700 cursor-pointer`}
                   onClick={() => setLightboxLook(look)}
                 >
@@ -393,7 +393,7 @@ export default function EditorialPage() {
                     </span>
                     <span className="text-[10px] font-mono text-zinc-300 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded border border-white/10 flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-red-500" />
-                      <span>{look.location.split("/")[0]}</span>
+                      <span>{(look.location || "").split("/")[0] || look.location || "İSTANBUL"}</span>
                     </span>
                   </div>
 
@@ -408,7 +408,7 @@ export default function EditorialPage() {
                   {/* Alt Bilgi */}
                   <div className="absolute inset-x-0 bottom-0 p-6 z-10 flex flex-col justify-end space-y-2">
                     <div className="flex flex-wrap gap-1.5">
-                      {look.tags.map((t) => (
+                      {(look.tags || []).map((t) => (
                         <span
                           key={t}
                           className="text-[9px] font-mono font-black text-red-400 bg-red-950/80 border border-red-900/60 px-2 py-0.5 rounded uppercase"
