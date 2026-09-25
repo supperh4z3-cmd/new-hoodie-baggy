@@ -13,14 +13,14 @@ export default function HomePage() {
       {/* Dynamic Crimson Marquee Ticker 1 */}
       <div className="bg-red-600 text-black py-3 overflow-hidden whitespace-nowrap font-mono font-black text-xs sm:text-sm tracking-widest uppercase flex select-none shadow-2xl relative z-20">
         <div className="animate-marquee flex gap-8 items-center">
-          <span>★ 460 GSM SAF FRANSIZ HAVLU PAMUK</span>
+          <span>★ 460 GSM AĞIR GRAMAJ SAF PAMUK</span>
           <span>★ 14.5 OZ JAPON SELVEDGE HAM DENİM</span>
           <span>★ 380 GSM FLANEL İŞÇİ GÖMLEKLERİ</span>
           <span>★ 300 GSM ASİT YIKAMA DRILL TEE</span>
           <span>★ İSTANBUL & AMSTERDAM DRILL ARCHIVE</span>
           <span>★ 2.000 ₺ ÜZERİ ÜCRETSİZ HIZLI KARGO</span>
           <span>★ NO SEASONS. ONLY DROPS.</span>
-          <span>★ 460 GSM SAF FRANSIZ HAVLU PAMUK</span>
+          <span>★ 460 GSM AĞIR GRAMAJ SAF PAMUK</span>
           <span>★ 14.5 OZ JAPON SELVEDGE HAM DENİM</span>
           <span>★ 380 GSM FLANEL İŞÇİ GÖMLEKLERİ</span>
           <span>★ 300 GSM ASİT YIKAMA DRILL TEE</span>

@@ -4,7 +4,7 @@
 -- 1. SEED CATEGORIES
 INSERT INTO public.categories (slug, name, description, image_url, item_count)
 VALUES
-('hoodies', 'HOODIES', '460 GSM Ağır French Terry pamuk, boxy kesim drill kapüşonlular.', '/images/categories/hoodies-cat.webp', 8),
+('hoodies', 'HOODIES', '460 GSM ağır gramajlı saf pamuk, boxy kesim drill kapüşonlular.', '/images/categories/hoodies-cat.webp', 8),
 ('sweatpants', 'SWEATPANTS', 'Geniş paça, dökümlü ve rahat sokak stili eşofman altları.', '/images/categories/sweatpants-cat.webp', 6),
 ('jackets', 'JACKETS', 'Ağır fermuarlı ceketler, drill montlar ve rüzgarlıklar.', '/images/categories/jackets-cat.webp', 5),
 ('jeans', 'JEANS', 'Washed denim, baggy & wide leg kesim sokak jeanleri.', '/images/categories/jeans-cat.webp', 7),
@@ -37,9 +37,9 @@ VALUES
     'NEW',
     true,
     true,
-    'Amsterdam sokak modasının karanlık ve ödün vermeyen ruhunu yansıtan ağır gramajlı hoodie. 460 GSM saf pamuklu French Terry kumaşı, çift katmanlı dik duran kapüşonu ve göğüste kabartma Baggy Street drill nakış logosuyla zamansız bir silüet.',
-    '460 GSM saf French Terry kumaştan üretilen ultra ağır kapüşonlu.',
-    '%100 Ağır Fransız Havlu Pamuğu (460 GSM / 13.5 oz).',
+    'Amsterdam sokak modasının karanlık ve ödün vermeyen ruhunu yansıtan ağır gramajlı hoodie. 460 GSM saf tok pamuk kumaşı, çift katmanlı dik duran kapüşonu ve göğüste kabartma Baggy Street drill nakış logosuyla zamansız bir silüet.',
+    '460 GSM saf ağır pamuk kumaştan üretilen ultra ağır kapüşonlu.',
+    '%100 Ağır Gramaj Saf Pamuk (460 GSM / 13.5 oz).',
     'Boxy & Drop-shoulder oversize kesim. Kendi bedeninizi alabilirsiniz.',
     'Ters çevirerek 30 derecede benzer renklerle yıkayınız. Kurutma makinesine atmayınız.',
     ARRAY['/images/products/drill-logo-hoodie.webp', '/images/editorial/drill-tunnel-crew.webp'],

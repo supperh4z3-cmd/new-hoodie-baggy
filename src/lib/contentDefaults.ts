@@ -119,7 +119,7 @@ export const DEFAULT_EDITORIAL_LOOKS: EditorialLook[] = [
     frameNo: 'FRAME [01/07]',
     title: 'UNDERGROUND TUNNEL DRILL',
     category: 'hoodies',
-    subtitle: 'Ağır 460 GSM French Terry pamuklu ve çift katmanlı dik duran kapüşon silüeti.',
+    subtitle: 'Ağır 460 GSM tok pamuklu ve çift katmanlı dik duran kapüşon silüeti.',
     location: '41.0082° N, 28.9784° E / İSTANBUL',
     cameraInfo: 'Leica M6 // Kodak Tri-X 400 B&W // 35mm f/1.4',
     modelSpecs: 'Boy: 1.88 m • Kilo: 78 kg • Beden: L / Oversize',
@@ -236,7 +236,7 @@ export const DEFAULT_EDITORIAL_LOOKS: EditorialLook[] = [
     aspect: 'aspect-square',
     tilt: '-rotate-3',
     offset: 'lg:translate-y-16',
-    tags: ['FRENCH TERRY', 'EXTRA POCKETS', 'CHUNKY DRAWSTRING'],
+    tags: ['AĞIR PAMUK', 'EXTRA POCKETS', 'CHUNKY DRAWSTRING'],
     featuredProductSlug: 'heavy-baggy-sweatpants',
     quote: 'Hareket özgürlüğü ve tavizsiz salaşlık.',
   },
@@ -249,9 +249,9 @@ export const DEFAULT_BRAND_STORY: BrandStoryContent = {
   paragraph1:
     "Baggy Street; Amsterdam'ın yağmurlu kanallarında doğan karanlık drill müziğinin sert basları ile İstanbul sokaklarının bitmeyen enerjisini bir araya getiren bağımsız bir tasarım atölyesidir.",
   paragraph2:
-    'Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM saf Fransız havlu pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.',
+    'Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM ağır gramajlı saf pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.',
   stats: [
-    { label: '460 GSM SAF HAVLU', icon: 'HeavyStitch' },
+    { label: '460 GSM SAF PAMUK', icon: 'HeavyStitch' },
     { label: '14.5 OZ RAW DENİM', icon: 'HeavyStitch' },
     { label: '380 GSM FLANEL', icon: 'HeavyStitch' },
     { label: '300 GSM ASİT YIKAMA', icon: 'HeavyStitch' },

@@ -127,12 +127,12 @@ export default function AboutPage() {
       {/* 2. KIRMIZI HAREKETLİ TİCKER MARQUEE */}
       <div className="bg-red-600 text-black py-3 overflow-hidden whitespace-nowrap font-mono font-black text-xs sm:text-sm tracking-widest uppercase flex select-none shadow-2xl">
         <div className="animate-marquee flex gap-8 items-center">
-          <span>★ 460 GSM SAF FRANSIZ HAVLU PAMUK</span>
+          <span>★ 460 GSM AĞIR GRAMAJ SAF PAMUK</span>
           <span>★ 14.5 OZ JAPON SELVEDGE HAM DENİM</span>
           <span>★ DÜŞÜK OMUZLU TOK BOXY KALIPLAR</span>
           <span>★ İSTANBUL SOKAKLARINDAN DÜNYAYA</span>
           <span>★ SIFIR TAVİZ, SINIRSIZ SOKAK ENERJİSİ</span>
-          <span>★ 460 GSM SAF FRANSIZ HAVLU PAMUK</span>
+          <span>★ 460 GSM AĞIR GRAMAJ SAF PAMUK</span>
           <span>★ 14.5 OZ JAPON SELVEDGE HAM DENİM</span>
           <span>★ DÜŞÜK OMUZLU TOK BOXY KALIPLAR</span>
           <span>★ İSTANBUL SOKAKLARINDAN DÜNYAYA</span>
@@ -289,7 +289,7 @@ export default function AboutPage() {
               <span>KUMAŞ MİMARİSİ</span>
             </span>
             <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white font-mono">
-              NEDEN 460 GSM SAF FRANSIZ HAVLU?
+              NEDEN 460 GSM AĞIR GRAMAJ PAMUK?
             </h2>
             <p className="text-xs sm:text-sm text-zinc-400 font-mono">
               Standart hızlı moda kapüşonluları ile Baggy Street ağır gramaj kumaş farkını yakından inceleyin.
@@ -361,7 +361,7 @@ export default function AboutPage() {
               </div>
               <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                 {selectedGsm === 460
-                  ? "Ağır ilmekli Fransız havlu örgüsü, gece soğuklarında ve rüzgarda üstün bir termal koruma sağlar."
+                  ? "Özel sıkı dokuma ağır pamuk örgüsü, gece soğuklarında ve rüzgarda üstün bir termal koruma sağlar."
                   : "Sentetik karışımlı ince polar doku çabuk terletir fakat sokak rüzgarına karşı koruma sağlamaz."}
               </p>
             </div>
@@ -422,7 +422,7 @@ export default function AboutPage() {
 
             <div className="space-y-3 relative z-10">
               <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase font-mono">
-                460 GSM SAF FRENCH TERRY HAVLU
+                460 GSM AĞIR GRAMAJ SAF PAMUK
               </h3>
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-xl font-sans">
                 Piyasadaki standart ince kapüşonluların aksine; iki katmanlı dik duran kapüşon ve rüzgar geçirmeyen yoğun ilmek dokusu. Yıkandıkça formunu kaybetmez, esnemez, dik durur.

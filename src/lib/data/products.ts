@@ -16,10 +16,10 @@ export const PRODUCTS: Product[] = [
       "/images/products/drill-logo-hoodie-back.webp",
       "/images/products/drill-logo-hoodie-model.webp",
     ],
-    shortDescription: "Ağır gramajlı Fransız havlu kumaş, sırt kısmında özel graffiti Baggy Street kabartma baskı.",
+    shortDescription: "Ağır gramajlı tok pamuk kumaş, sırt kısmında özel graffiti Baggy Street kabartma baskı.",
     description: "Baggy Street'in ikonik amiral gemisi: 460 GSM %100 saf pamuk kumaştan üretilen Drill Logo Hoodie, Amsterdam ve İstanbul sokaklarının ham ruhunu yansıtır. Düşük omuzlu boxy kesimi, çift katmanlı tok kapüşonu ve aşınmaya dayanıklı manşetleriyle sokak stiline yeni bir standart getirir.",
     details: {
-      material: "%100 Ağır French Terry Pamuk (460 GSM)",
+      material: "%100 Ağır Gramaj Saf Pamuk (460 GSM)",
       fit: "Boxy / Heavy Oversize (Normal bedeniniz bol durur)",
       care: "30°C'de tersten yıkayınız. Ağartıcı kullanmayınız.",
       origin: "İstanbul, Türkiye'de üretilmiştir.",
@@ -142,7 +142,7 @@ export const PRODUCTS: Product[] = [
       "/images/products/drill-logo-hoodie-back.webp",
     ],
     shortDescription: "Amsterdam gece kanallarından ilham alan reflektif dikişli ağır kapüşonlu.",
-    description: "Karanlık sokaklarda fark yaratan reflektif mikro detaylar ve derin kapüşon yapısı. 480 GSM en üst seviye Fransız havlu kumaşı ile maksimum tokluk.",
+    description: "Karanlık sokaklarda fark yaratan reflektif mikro detaylar ve derin kapüşon yapısı. 480 GSM en üst seviye özel dokuma ağır pamuk kumaşı ile maksimum tokluk.",
     details: {
       material: "%100 Taranmış Ağır Pamuk (480 GSM)",
       fit: "Heavy Boxy Oversize",

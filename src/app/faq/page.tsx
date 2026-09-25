@@ -71,7 +71,7 @@ const FAQ_DATA: FAQItem[] = [
     category: "care",
     question: "460 GSM Heavyweight kumaşlar nasıl yıkanmalı?",
     answer:
-      "Ağır gramajlı Fransız havlu kumaşlarımızın dokusunu ve renk yoğunluğunu korumak için: 1) Ürünü mutlaka ters çevirerek yıkayınız. 2) Maksimum 30°C soğuk suda, hassas/streetwear programında yıkayınız. 3) Ağartıcı veya yoğun kimyasal içeren yumuşatıcı kullanmayınız. 4) Kurutma makinesine atmayınız; doğrudan düz bir zemine sererek kurutunuz.",
+      "Ağır gramajlı saf pamuk kumaşlarımızın dokusunu ve renk yoğunluğunu korumak için: 1) Ürünü mutlaka ters çevirerek yıkayınız. 2) Maksimum 30°C soğuk suda, hassas/streetwear programında yıkayınız. 3) Ağartıcı veya yoğun kimyasal içeren yumuşatıcı kullanmayınız. 4) Kurutma makinesine atmayınız; doğrudan düz bir zemine sererek kurutunuz.",
   },
   {
     id: "care-2",
@@ -250,7 +250,7 @@ export default function FAQPage() {
             <span>460 GSM HEAVYWEIGHT // BAKIM TALİMATI</span>
           </div>
           <h3 className="text-base sm:text-lg font-bold font-mono text-white uppercase mb-2">
-            ÖZEL FRANSIZ HAVLU KUMAŞINI İLK GÜNKÜ GİBİ KORU
+            ÖZEL AĞIR GRAMAJ PAMUK KUMAŞINI İLK GÜNKÜ GİBİ KORU
           </h3>
           <p className="text-xs text-zinc-400 mb-4 leading-relaxed">
             Streetwear kalıplarımız ağır gramajlı saf pamuk dokumadır. Uzun ömürlü kullanım için temel kurallar:

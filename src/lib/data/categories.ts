@@ -6,7 +6,7 @@ export const CATEGORIES: Category[] = [
     slug: "hoodies",
     name: "HOODIES",
     image: "/images/categories/hoodies-cat.webp",
-    description: "460 GSM Ağır French Terry pamuk, boxy kesim drill kapüşonlular.",
+    description: "460 GSM ağır gramajlı saf pamuk, boxy kesim drill kapüşonlular.",
     itemCount: 8,
   },
   {
