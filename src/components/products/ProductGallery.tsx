@@ -34,6 +34,7 @@ export function ProductGallery({ images, name, badge }: ProductGalleryProps) {
                 fill
                 sizes="80px"
                 className="object-cover"
+                unoptimized={img.startsWith('/uploads/') || img.startsWith('http')}
               />
             </button>
           ))}
@@ -49,6 +50,7 @@ export function ProductGallery({ images, name, badge }: ProductGalleryProps) {
           priority
           sizes="(max-width: 768px) 100vw, 55vw"
           className="object-cover object-center transition-all duration-300 hover:scale-105"
+          unoptimized={activeImage.startsWith('/uploads/') || activeImage.startsWith('http')}
         />
 
         {badge && (

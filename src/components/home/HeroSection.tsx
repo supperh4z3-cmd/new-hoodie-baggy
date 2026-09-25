@@ -89,29 +89,46 @@ const HERO_SLIDES: HeroSlide[] = [
 ];
 
 export function HeroSection() {
+  const [slides, setSlides] = useState<HeroSlide[]>(HERO_SLIDES);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  useEffect(() => {
+    let isMounted = true;
+    fetch('/api/content')
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.settings?.hero_slides && Array.isArray(data.settings.hero_slides) && data.settings.hero_slides.length > 0) {
+          setSlides(data.settings.hero_slides);
+        }
+      })
+      .catch((err) => console.warn('HeroSection content fetch fallback:', err));
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // 6.5 saniyede bir otomatik kaydırma
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
+      setCurrentIdx((prev) => (prev + 1) % slides.length);
     }, 6500);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, slides.length]);
 
   const handleNext = () => {
-    setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
+    setCurrentIdx((prev) => (prev + 1) % slides.length);
   };
 
   const handlePrev = () => {
-    setCurrentIdx((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+    setCurrentIdx((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
-  const activeSlide = HERO_SLIDES[currentIdx];
+  const activeSlide = slides[currentIdx] || slides[0] || HERO_SLIDES[0];
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -124,7 +141,7 @@ export function HeroSection() {
     <section className="relative w-full min-h-[92vh] md:min-h-[96vh] flex flex-col justify-between overflow-hidden bg-black select-none">
       {/* Arka Plan Medya Katmanları (Videolar ve Geçişler) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {HERO_SLIDES.map((slide, idx) => {
+        {slides.map((slide, idx) => {
           const isActive = idx === currentIdx;
           return (
             <div
@@ -263,7 +280,7 @@ export function HeroSection() {
 
           {/* Slayt İlerleme Çubukları */}
           <div className="flex items-center gap-2">
-            {HERO_SLIDES.map((slide, idx) => (
+            {slides.map((slide, idx) => (
               <button
                 key={slide.id}
                 type="button"

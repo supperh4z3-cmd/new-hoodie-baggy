@@ -200,7 +200,25 @@ export default function EditorialPage() {
     };
   }, [lightboxLook]);
 
-  const filteredLooks = EDITORIAL_LOOKS.filter((look) => {
+  const [looks, setLooks] = useState<EditorialLook[]>(EDITORIAL_LOOKS);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/content")
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.settings?.editorial_looks && Array.isArray(data.settings.editorial_looks) && data.settings.editorial_looks.length > 0) {
+          setLooks(data.settings.editorial_looks);
+        }
+      })
+      .catch((err) => console.warn("Editorial page content fetch fallback:", err));
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const filteredLooks = looks.filter((look) => {
     if (selectedCategory === "all") return true;
     return look.category === selectedCategory;
   });
@@ -361,6 +379,7 @@ export default function EditorialPage() {
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover object-center filter contrast-115 group-hover:scale-110 transition-transform duration-700"
+                      unoptimized={look.mediaSrc.startsWith('/uploads/') || look.mediaSrc.startsWith('http')}
                     />
                   )}
 
@@ -502,6 +521,7 @@ export default function EditorialPage() {
                   alt={lightboxLook.title}
                   fill
                   className="object-cover"
+                  unoptimized={lightboxLook.mediaSrc.startsWith('/uploads/') || lightboxLook.mediaSrc.startsWith('http')}
                 />
               )}
             </div>

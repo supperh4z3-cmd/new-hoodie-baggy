@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MoveUpRight, Volume2, VolumeX } from "lucide-react";
@@ -10,9 +10,30 @@ import {
   RazorBladeSvg,
   StreetCoordinatesSvg,
 } from "@/components/common/StreetIcons";
+import {
+  DEFAULT_BRAND_STORY,
+  BrandStoryContent,
+} from "@/lib/contentDefaults";
 
 export function BrandStory() {
   const [audioActive, setAudioActive] = useState(true);
+  const [story, setStory] = useState<BrandStoryContent>(DEFAULT_BRAND_STORY);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/content")
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.settings?.brand_story) {
+          setStory(data.settings.brand_story);
+        }
+      })
+      .catch((err) => console.warn("BrandStory content fetch fallback:", err));
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <section className="relative bg-[#06060a] py-20 sm:py-28 border-b border-zinc-850 overflow-hidden">
@@ -78,40 +99,30 @@ export function BrandStory() {
           <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-2 bg-red-950/40 border border-red-900/60 px-3 py-1 rounded-full text-xs font-mono text-red-400 uppercase font-black">
               <RazorBladeSvg size={16} className="text-red-400" />
-              <span>KURALLARI YIKAN SOKAK MODASI</span>
+              <span>{story.badge}</span>
             </div>
 
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase font-mono leading-none">
-              FROM ISTANBUL <br />
-              <span className="text-stroke-white text-transparent">TO THE WORLD</span>
+              {story.titleLine1} <br />
+              <span className="text-stroke-white text-transparent">{story.titleLine2}</span>
             </h2>
 
             <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-lg font-sans">
-              Baggy Street; Amsterdam&apos;ın yağmurlu kanallarında doğan karanlık drill müziğinin sert basları ile İstanbul sokaklarının bitmeyen enerjisini bir araya getiren bağımsız bir tasarım atölyesidir.
+              {story.paragraph1}
             </p>
 
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-lg font-sans">
-              Hızlı modanın dayattığı tekdüze dar kalıplara meydan okuyoruz. 460 GSM saf Fransız havlu pamuk, 14.5 oz sert Japon selvedge denim ve düşük omuzlu tok boxy kalıplarla sokağın gerçek zırhını inşa ediyoruz.
+              {story.paragraph2}
             </p>
 
-            {/* 4 Fabric Anatomy Pills */}
+            {/* Fabric Anatomy Pills */}
             <div className="grid grid-cols-2 gap-2 pt-2 text-xs font-mono">
-              <div className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
-                <HeavyStitchSvg size={18} className="text-red-500 shrink-0" />
-                <span className="text-zinc-200 font-bold">460 GSM SAF HAVLU</span>
-              </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
-                <HeavyStitchSvg size={18} className="text-amber-500 shrink-0" />
-                <span className="text-zinc-200 font-bold">14.5 OZ RAW DENİM</span>
-              </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
-                <HeavyStitchSvg size={18} className="text-red-400 shrink-0" />
-                <span className="text-zinc-200 font-bold">380 GSM FLANEL</span>
-              </div>
-              <div className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
-                <HeavyStitchSvg size={18} className="text-zinc-400 shrink-0" />
-                <span className="text-zinc-200 font-bold">300 GSM ASİT YIKAMA</span>
-              </div>
+              {story.stats && story.stats.map((stat, idx) => (
+                <div key={idx} className="p-2.5 rounded-lg bg-zinc-900/70 border border-zinc-800 flex items-center gap-2">
+                  <HeavyStitchSvg size={18} className="text-red-500 shrink-0" />
+                  <span className="text-zinc-200 font-bold">{stat.label}</span>
+                </div>
+              ))}
             </div>
 
             {/* Action Buttons */}
@@ -138,12 +149,13 @@ export function BrandStory() {
           <div className="lg:col-span-6 relative">
             <div className="relative h-[460px] sm:h-[540px] rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl group bg-zinc-950">
               <Image
-                src="/images/brand/brand-story.webp"
+                src={story.image || "/images/brand/brand-story.webp"}
                 alt="From Istanbul to the World - Baggy Street Editorial"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700 filter contrast-110"
+                unoptimized={story.image?.startsWith('/uploads/') || story.image?.startsWith('http')}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20" />
 

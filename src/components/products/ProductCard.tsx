@@ -74,6 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
           className={`object-cover object-center transition-all duration-700 ease-out ${
             hasSecondImage && isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100 group-hover:scale-105"
           }`}
+          unoptimized={product.images[0]?.startsWith('/uploads/') || product.images[0]?.startsWith('http')}
         />
 
         {/* Secondary Model / Editorial View on Hover */}
@@ -86,6 +87,7 @@ export function ProductCard({ product }: ProductCardProps) {
             className={`object-cover object-center transition-all duration-700 ease-out ${
               isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
             }`}
+            unoptimized={product.images[1]?.startsWith('/uploads/') || product.images[1]?.startsWith('http')}
           />
         )}
 
