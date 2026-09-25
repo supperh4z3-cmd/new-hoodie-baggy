@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, use } from "react";
 import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -23,9 +23,14 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { RelatedProducts } from "@/components/products/RelatedProducts";
 import { SizeGuideModal } from "@/components/products/SizeGuideModal";
 
-export default function ProductDetailPage() {
-  const params = useParams();
-  const slug = params?.slug as string;
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default function ProductDetailPage(props: PageProps) {
+  const resolvedParams = use(props.params);
+  const clientParams = useParams();
+  const slug = resolvedParams?.slug || (clientParams?.slug as string);
   const product = getProductBySlug(slug);
 
   if (!product) {
@@ -560,7 +565,7 @@ export default function ProductDetailPage() {
             ) : (
               <>
                 <ShoppingBag className="w-4 h-4 shrink-0" />
-                <span className="truncate">SEPETE EKLE</span>
+                <span className="truncate min-w-0">SEPETE EKLE</span>
                 <span className="shrink-0 text-[10px] opacity-75 font-normal">
                   ({selectedSize})
                 </span>
